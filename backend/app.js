@@ -1,7 +1,8 @@
 const express = require('express'); // Importation package Express --> Framework Node.JS //
 const bodyParser = require('body-parser'); // Importation package BodyParser --> Extrait Objet -> Format JSON//
-const mongoose = require('mongoose'); //Importation package mongoose --> Connection Base de donnée (mongo DB) //
+const mariadb= require ('mariadb'); //Connectin BDD //
 const path= require ('path'); //Importation package Path --> Fournit des utilitaires pour travailler avec les chemins de fichiers et de répertoires  // 
+require('dotenv').config()
 
 /* const sauceRoutes = require('./routes/sauce'); //Importation ficher Routes/sauce.js //
 const userRoutes = require('./routes/user'); //Importation ficher Routes/user.js // */
@@ -16,13 +17,24 @@ app.use((req, res, next) => { // Middleware (CORS) //
 });
 
 //Connection Base de donnée //
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0-1l7tk.gcp.mongodb.net/test?retryWrites=true&w=majority`,{
-    useNewUrlParser: true,  //deprecation warnings = avertissement fonctionnalité,biblio existante va être modifiée,supprimée,remplacée//
-    useUnifiedTopology: true,
-    useCreateIndex:true
-  })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+const pool = mariadb.createPool({host: process.env.DB_HOST, user: process.env.DB_USER, connectionLimit: 5});
+pool.getConnection()
+    .then(conn => {
+    
+      conn.query("SELECT 1 as val")
+        .then(rows => { // rows: [ {val: 1}, meta: ... ]
+          return conn.query("INSERT INTO myTable value (?, ?)", [1, "mariadb"]);
+        })
+        .then(res => { // res: { affectedRows: 1, insertId: 1, warningStatus: 0 }
+          conn.release(); // release to pool
+        })
+        .catch(err => {
+          conn.release(); // release to pool
+        })
+        
+    }).catch(err => {
+      'Connection à la BDD échouée ! '
+    });
 
 
 
