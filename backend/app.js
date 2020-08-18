@@ -12,7 +12,7 @@ app.use((req, res, next) => { // Middleware (CORS) //
   next();
 });
 
-require('./connection'); 
+require('./models/connection'); 
 
 app.use(bodyParser.json());
 app.use('/multimedia', express.static(path.join(__dirname, 'images'))); // Application utilise Image //
