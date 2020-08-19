@@ -28,6 +28,7 @@ exports.signup = (req, res, next) => {
       .then(hash => {
           const user = new User({ //Création de l'utilisateur // 
               email: req.body.email,
+              username:req.body.username,
               password: hash
           });
           user.save() // Enregistrer dans la BDD //
