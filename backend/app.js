@@ -16,6 +16,9 @@ require('./models/connection');
 
 app.use(bodyParser.json());
 app.use('/multimedia', express.static(path.join(__dirname, 'images'))); // Application utilise Image //
+app.get('/', function (req,res) {
+  res.status(200).send ('<h1>Ceci est un test </h1>');
+})
 
 
 module.exports = app; // Exportation pour le fichier server.js //
