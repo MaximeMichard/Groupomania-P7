@@ -1,4 +1,4 @@
-const express = require("express"); //importation framework Express //
+/* const express = require("express"); //importation framework Express //
 const router = express.Router(); //Importation du router Express //
 
 const postCtrl = require("../controllers/post"); 
@@ -14,3 +14,4 @@ router.delete("/:id", auth, sauceCtrl.deleteSauce);
 router.post("/:id/like", auth, multer, sauceCtrl.likeSauce);
 
 module.exports = router;
+ */
