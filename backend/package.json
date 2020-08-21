@@ -18,6 +18,7 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
     "express-bouncer": "^0.2.0",
     "helmet": "^4.1.0",
     "jsonwebtoken": "^8.5.1",

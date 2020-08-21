@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt"); //Plug in pour hasher les passwords //
 const jwt = require("jsonwebtoken"); //Plug in pour sécuriser la connection avec des tokens uniques //
-const User = require("../models/user"); //Importation du model User
+const models = require("../models"); //Importation du model User
 const passwordvalidator= require ('password-validator'); // Sécurité password // 
 require('dotenv').config();
 
@@ -18,55 +18,73 @@ schema
 //Inscription // 
 
 exports.signup = (req, res, next) => {
+
+  let email = req.body.email;
+  let username = req.body.username;
+  let password = req.body.password; 
+  let admin= req.body.isAdmin;
+
   if (!schema.validate(req.body.password)){ // Si schéma correspond pas alors -> error //
     res.status(401).json({
       error: Error.message= 'Schéma incorrect ! '
     });
   }
   else if (schema.validate(req.body.password)){ // Schéma correct exact le script //
-    bcrypt.hash(req.body.password, 10) // "Salage" mdp 10 fois (plus la valeur élevée -> plus de sécurité mais exec fonction lente) //
-      .then(hash => {
-          const user = new User({ //Création de l'utilisateur // 
-              email: req.body.email,
-              username:req.body.username,
-              password: hash
-          });
-          user.save() // Enregistrer dans la BDD //
-              .then(() => res.status(201).json({
-                  message: 'Utilisateur créé !'
-              }))
-              .catch(error => res.status(400).json({
-                  error
-              }));
-      })
-      .catch(error => res.status(500).json({
-          error
-      }));
-  } 
+    models.User.findOne({
+            attributes: ['email'],
+            where: { email: email }
+        })
+            .then(user => {
+                if (!user) {
+                    bcrypt.hash(password, 10, function (err, bcryptPassword) {
+                        // Création de l'user
+                        const newUser = models.User.create({
+                            email: email,
+                            username: username,
+                            password: bcryptPassword,
+                            isAdmin: admin
+                        })
+                            .then(newUser => { res.status(201).json({ 'id': newUser.id }) })
+                            .catch(err => {
+                                res.status(500).json({ err })
+                            })
+                    })
+                }
+                else {
+                    res.status(409).json({ error: 'Cette utilisateur existe déjà ' })
+                }
+            })
+            .catch(err => { res.status(500).json({ err }) })
+    }
 };
 
 // Connection  //
 
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email }) // Utilisation models user pour check si l'email existe déjà dans la BDD // 
-    .then((user) => { 
-      if (!user) {// Renvoi message error si l'adresse n'existe pas //
-        return res.status(401).json({ error: "Utilisateur non trouvé" });
-      }
-      bcrypt // Utilisation fonction compare of bcript // 
-        .compare(req.body.password, user.password) //Compare le password avec celui de la BDD //
-        .then((valid) => {
-          if (!valid) { // Mdp incorrect --> renvoi error //
-            return res.status(401).json({ error: "Login ou Mot de passe incorrect" });
-          }
-          res.status(200).json({ // Mpd correct --> renvoi ID utilisateur & TOKEN // 
-            userId: user._id,
-            token: jwt.sign({ userId: user._id }, `${process.env.DB_TOKEN}`, { //TOKEN de 24h qui est généré //
-              expiresIn: "24h",
-            }),
-          });
-        })
-        .catch((error) => res.status(500).json({ error }));
+  let username= req.body.username;
+  let password= req.body.password;
+  if (username ==null || password == null){
+    res.status(400).json({message: 'Il y a une couille dans le paté mon gars! '});
+  }
+  models.User.findOne({
+        where: { username: username }
     })
-    .catch((error) => res.status(500).json({ error }));
+        .then(user => {
+            if (user) {
+                bcrypt.compare(password, user.password, (errComparePassword, resComparePassword) => {
+                    if (resComparePassword) {
+                        res.status(200).json({
+                            userId: user.id,
+                            token: "MA BITE ET MON COUTEAU !",
+                            isAdmin: user.isAdmin
+                        })
+                    } else {
+                        res.status(403).json({ error: 'invalid password' });
+                    };
+                })
+            } else {
+                res.status(404).json({ 'erreur': 'Cet utilisateur n\'existe pas' })
+            }
+        })
+        .catch(err => { res.status(500).json({ err }) })
 };
