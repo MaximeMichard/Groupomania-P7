@@ -98,7 +98,7 @@ exports.getUserProfile = (req,res,next) => {
 
     if (userId < 0)
       return res.status(400).json({ 'error': 'Mauvaise Token !' });
-
+      
     models.User.findOne({
       attributes: [ 'id', 'email', 'username'],
       where: { id: userId }
@@ -114,13 +114,47 @@ exports.getUserProfile = (req,res,next) => {
     }); 
 }
 exports.update= (req,res,next) => {
-    let headerAuth  = req.headers['authorization'];
-    let userId      = jwtUtils.getUserId(headerAuth);
+  let userId = jwtUtils.getUserId(req.headers.authorization);
+  const newPassword = req.body.newPassword;
+  //Vérification regex du nouveau mot de passe
+  if (schema.validate(newPassword)) {
+      //Vérifie qu'il est différent de l'ancien
+      models.User.findOne({
+          where: { id: userId }
+      })
+          .then(user => {
+              console.log('user trouvé', user)
+              bcrypt.compare(newPassword, user.password, (errComparePassword, resComparePassword) => {
+                  //bcrypt renvoit resComparePassword si les mdp sont identiques donc aucun changement
+                  if (resComparePassword) {
+                      res.status(406).json({ error: 'Vous avez entré le même mot de passe' })
+                  } else {
+                      bcrypt.hash(newPassword, 10, function (err, bcryptNewPassword) {
+                          models.User.update(
+                              { password: bcryptNewPassword },
+                              { where: { id: user.id } }
+                          )
+                              .then(() => res.status(201).json({ confirmation: 'mot de passe modifié avec succès' }))
+                              .catch(err => res.status(500).json(err))
+                      })
+                  }
+              })
+          })
+          .catch(err => json(err))
+  } else {
+      res.status(406).json({ error: 'mot de passe non valide' })
+  }
     
 }
 
 exports.delete = (req,res,next) => {
-    let headerAuth  = req.headers['authorization'];
-    let userId      = jwtUtils.getUserId(headerAuth);
+  const headerAuth = req.headers['authorization'];
+  const userId = jwtUtils.getUserId(headerAuth);
+
+  models.User
+      .destroy({ where: { id: userId } })
+      .then(() => models.User.destroy({where: {id: userId}}))
+      .then(() => res.status(204).json())
+      .catch(error => res.status(400).json({ error }));
   
 }
