@@ -113,7 +113,7 @@ exports.getUserProfile = (req,res,next) => {
       res.status(500).json({ 'error': 'Error envoi !' });
     }); 
 }
-exports.update= (req,res,next) => {
+exports.updatePwd= (req,res,next) => {
   let userId = jwtUtils.getUserId(req.headers.authorization);
   const newPassword = req.body.newPassword;
   //Vérification regex du nouveau mot de passe
@@ -145,6 +145,16 @@ exports.update= (req,res,next) => {
       res.status(406).json({ error: 'mot de passe non valide' })
   }
     
+}
+exports.updateUser = (req,res,next) => {
+    models.User.update(
+        {
+        username: req.body.username
+        },
+        {
+        where: { id: req.body.id }
+        }
+    ).then(()=> res.send("Valider !"));
 }
 
 exports.delete = (req,res,next) => {
