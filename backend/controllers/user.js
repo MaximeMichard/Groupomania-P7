@@ -93,15 +93,10 @@ exports.login = (req, res, next) => {
 };
 
 exports.getUserProfile = (req,res,next) => {
-    let headerAuth  = req.headers['authorization'];
-    let userId      = jwtUtils.getUserId(headerAuth);
-
-    if (userId < 0)
-      return res.status(400).json({ 'error': 'Mauvaise Token !' });
       
     models.User.findOne({
       attributes: [ 'id', 'email', 'username'],
-      where: { id: userId }
+      _id: req.params.id
       
     }).then(function(user) {
       if (user) {
@@ -146,25 +141,15 @@ exports.updatePwd= (req,res,next) => {
   }
     
 }
-exports.updateUser = (req,res,next) => {
-    models.User.update(
-        {
-        username: req.body.username
-        },
-        {
-        where: { id: req.body.id }
-        }
-    ).then(()=> res.send("Valider !"));
-}
 
 exports.delete = (req,res,next) => {
   const headerAuth = req.headers['authorization'];
   const userId = jwtUtils.getUserId(headerAuth);
 
-  models.User
-      .destroy({ where: { id: userId } })
+  models.User.destroy({ 
+      where: { id: userId } 
+    })
       .then(() => models.User.destroy({where: {id: userId}}))
-      .then(() => res.status(204).json())
-      .catch(error => res.status(400).json({ error }));
-  
+      .then(() => res.status(204).json({ message:"Utilisateur Supprimé "}))
+      .catch(error => res.status(400).json({ error })); 
 }
