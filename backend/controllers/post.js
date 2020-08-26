@@ -1,7 +1,11 @@
-const post= require ('../models');
+const models= require ('../models');
 
 exports.createPost = (req,res,next) => {
-    
+    const postObject=JSON.parse(req.body.post)
+    const post= new post({
+        ...postObject,
+        imag
+    })
 }
 exports.getPost = (req,res,next) => {
     

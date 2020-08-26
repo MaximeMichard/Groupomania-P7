@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt"); //Plug in pour hasher les passwords //
-const jwtUtils = require("../utils/jwt.utils"); //Plug in pour sécuriser la connection avec des tokens uniques //
+const jwt = require ('jsonwebtoken'); //Plug in pour sécuriser la connection avec des tokens uniques //
+const jwtutils= require ('../utils/jwt.utils');
 const models = require("../models"); //Importation du model User
 const passwordvalidator= require ('password-validator'); // Sécurité password // 
 require('dotenv').config();
@@ -24,7 +25,7 @@ exports.signup = (req, res, next) => {
   let password = req.body.password; 
 
   if (email == null || username== null || password ==null ){
-      res.status(400).json({error: 'Il manque un paramètre mon gars ! '});
+      res.status(400).json({error: 'Il manque un paramètre! '});
   }
 
   if (!schema.validate(req.body.password)){ // Si schéma correspond pas alors -> error //
@@ -64,13 +65,13 @@ exports.signup = (req, res, next) => {
 // Connection  //
 
 exports.login = (req, res, next) => {
-  let username= req.body.username;
+  let email= req.body.email;
   let password= req.body.password;
-  if (username ==null || password == null){
+  if (email ==null || password == null){
     res.status(400).json({message: 'Il y a une couille dans le paté mon gars! '});
   }
   models.User.findOne({
-        where: { username: username }
+        where: { email: email }
     })
         .then(user => {
             if (user) {
@@ -78,8 +79,9 @@ exports.login = (req, res, next) => {
                     if (resBcrypt) {
                         res.status(200).json({
                             userId: user.id,
-                            token: jwtUtils.generateTokenForUser(user),
-                            isAdmin: user.isAdmin
+                            token: jwt.sign({userId: user._id},"BONJOUR1234",{
+                                expiresIn:"24",
+                            })
                         })
                     } else {
                         res.status(403).json({ error: 'invalid password' });
@@ -95,21 +97,14 @@ exports.login = (req, res, next) => {
 exports.getUserProfile = (req,res,next) => {
       
     models.User.findOne({
-      attributes: [ 'id', 'email', 'username'],
-      _id: req.params.id
-      
-    }).then(function(user) {
-      if (user) {
-        res.status(201).json(user);
-      } else {
-        res.status(404).json({ 'error': 'Utilisateur Trouver' });
-      }
-    }).catch(function(err) {
-      res.status(500).json({ 'error': 'Error envoi !' });
-    }); 
+        id: req.params.id
+    })
+    .then((User) => res.status(200).json(User))
+    .catch((error) => res.status(404).json({
+      error
+    }));
 }
 exports.updatePwd= (req,res,next) => {
-  let userId = jwtUtils.getUserId(req.headers.authorization);
   const newPassword = req.body.newPassword;
   //Vérification regex du nouveau mot de passe
   if (schema.validate(newPassword)) {
@@ -142,12 +137,9 @@ exports.updatePwd= (req,res,next) => {
     
 }
 
-exports.delete = (req,res,next) => {
-  const headerAuth = req.headers['authorization'];
-  const userId = jwtUtils.getUserId(headerAuth);
-
+exports.delete = (req,res,next) => {  
   models.User.destroy({ 
-      where: { id: userId } 
+      _id: req.params.id
     })
       .then(() => models.User.destroy({where: {id: userId}}))
       .then(() => res.status(204).json({ message:"Utilisateur Supprimé "}))
