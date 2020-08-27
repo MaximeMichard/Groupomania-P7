@@ -68,7 +68,7 @@ exports.login = (req, res, next) => {
   let email= req.body.email;
   let password= req.body.password;
   if (email ==null || password == null){
-    res.status(400).json({message: 'Il y a une couille dans le paté mon gars! '});
+    res.status(400).json({message: 'Il manque un paramètre ! '});
   }
   models.User.findOne({
         where: { email: email }
@@ -79,8 +79,8 @@ exports.login = (req, res, next) => {
                     if (resBcrypt) {
                         res.status(200).json({
                             userId: user.id,
-                            token: jwt.sign({userId: user._id},"BONJOUR1234",{
-                                expiresIn:"24",
+                            token: jwt.sign({userId: user.id},"BONJOUR1234",{
+                                expiresIn:"24h",
                             })
                         })
                     } else {
@@ -95,9 +95,8 @@ exports.login = (req, res, next) => {
 };
 
 exports.getUserProfile = (req,res,next) => {
-      
     models.User.findOne({
-        id: req.params.id
+        where: { id: Number(req.params.id) } 
     })
     .then((User) => res.status(200).json(User))
     .catch((error) => res.status(404).json({
@@ -106,14 +105,12 @@ exports.getUserProfile = (req,res,next) => {
 }
 exports.updatePwd= (req,res,next) => {
   const newPassword = req.body.newPassword;
-  //Vérification regex du nouveau mot de passe
   if (schema.validate(newPassword)) {
       //Vérifie qu'il est différent de l'ancien
       models.User.findOne({
-          where: { id: userId }
+          where: { id: Number(req.params.id) }
       })
           .then(user => {
-              console.log('user trouvé', user)
               bcrypt.compare(newPassword, user.password, (errComparePassword, resComparePassword) => {
                   //bcrypt renvoit resComparePassword si les mdp sont identiques donc aucun changement
                   if (resComparePassword) {
@@ -122,7 +119,7 @@ exports.updatePwd= (req,res,next) => {
                       bcrypt.hash(newPassword, 10, function (err, bcryptNewPassword) {
                           models.User.update(
                               { password: bcryptNewPassword },
-                              { where: { id: user.id } }
+                              { where: { id: Number(req.params.id) } }
                           )
                               .then(() => res.status(201).json({ confirmation: 'mot de passe modifié avec succès' }))
                               .catch(err => res.status(500).json(err))
@@ -137,11 +134,28 @@ exports.updatePwd= (req,res,next) => {
     
 }
 
-exports.delete = (req,res,next) => {  
-  models.User.destroy({ 
-      _id: req.params.id
+exports.delete = (req,res,next) => {
+    if(req.params.id != null){
+       models.User.findOne({ //On cherche si l'utilisateur exite ou pas //
+    where: { id: Number(req.params.id) }
     })
-      .then(() => models.User.destroy({where: {id: userId}}))
-      .then(() => res.status(204).json({ message:"Utilisateur Supprimé "}))
-      .catch(error => res.status(400).json({ error })); 
+    .then((User) => {
+        models.User.destroy({ // Supprimer le fichier de la BDD//
+            where: { id: Number(req.params.id) }
+          })
+          .then(() => res.status(200).json({
+            message: "Utilisateur supprimé!"
+          }))
+          .catch((error) => res.status(400).json({
+            error
+          }));
+    })
+    .catch((error) => res.status(500).json({
+      error
+    })); 
+    }  
+    else {
+        res.status(500).json({ error: "L'utilisateur n'existe pas !"})
+    }
+    
 }

@@ -6,11 +6,11 @@ const auth = require("../middleware/auth"); // Token, authorisation //
 const multer = require("../middleware/multer-config"); //Importation de multer, Gére les fichiers entrant //
 
 
-router.get("/", auth,postCtrl.createPost);
-router.get("/:id", auth,postCtrl.getPost);
-router.post("/", auth, multer,postCtrl.updatePost);
-router.put("/:id", auth, multer,postCtrl.deletePost);
-router.delete("/:id", auth,postCtrl.deleteSauce);
+router.post("/",postCtrl.createPost);
+router.get("/:id",auth,postCtrl.getPost);
+ router.put("/:id",postCtrl.updatePost);
+/*router.delete("/:id", auth, multer,postCtrl.deletePost); */
+
 
 
 module.exports = router;
