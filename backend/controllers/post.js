@@ -22,12 +22,15 @@ exports.getPost = (req,res,next) => {
 
  exports.updatePost = async (req,res,next) => {
   const newTitle = req.body.newTitle;
-  await models.post.update({ title: newTitle }, {
+  const newContent= req.body.newContent;
+  const newAttachment= req.body.newAttachment;
+  
+  await models.post.update({ title: newTitle, content: newContent,attachment:newAttachment }, {
     where: {
       id: Number(req.params.id)
     }
   });
-  return res.status(200).json({ newTitle});
+  return res.status(200).json({ newTitle,newContent,newAttachment});
 }
 
 exports.deletePost = (req,res,next) => {
