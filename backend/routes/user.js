@@ -9,6 +9,6 @@ router.post('/signup', userCtrl.signup);
 router.post('/login',expressBouncer.block, userCtrl.login);
 router.get('/users/:id',auth,userCtrl.getUserProfile);
 router.put('/users/:id', userCtrl.updatePwd);
-router.delete('/users/:id',userCtrl.delete);
+router.delete('/users/:id',auth,userCtrl.delete);
 
 module.exports= router; 
