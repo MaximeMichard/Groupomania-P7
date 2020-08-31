@@ -133,7 +133,6 @@ exports.updatePwd= (req,res,next) => {
   }
     
 }
-
 exports.delete = (req,res,next) => {
     if(req.params.id != null){
        models.User.findOne({ //On cherche si l'utilisateur exite ou pas //

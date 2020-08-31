@@ -21,39 +21,31 @@ exports.getPost = (req,res,next) => {
 }
 
  exports.updatePost = async (req,res,next) => {
+  const newPost= req.body;
   const newTitle = req.body.newTitle;
   const newContent= req.body.newContent;
   const newAttachment= req.body.newAttachment;
   
-  await models.post.update({ title: newTitle, content: newContent,attachment:newAttachment }, {
+  await models.post.update({ 
+    title: newTitle, 
+    content: newContent,
+    attachment:newAttachment 
+  },{
     where: {
       id: Number(req.params.id)
     }
   });
-  return res.status(200).json({ newTitle,newContent,newAttachment});
+  return res.status(200).json({ newPost });
 }
 
-exports.deletePost = (req,res,next) => {
-  if(req.params.id != null){
-    models.post.findOne({ //On cherche si l'utilisateur exite ou pas //
- where: { id: Number(req.params.id) }
- })
- .then(() => {
-     models.post.destroy({ // Supprimer le fichier de la BDD//
-         where: { id: Number(req.params.id) }
-       })
-       .then(() => res.status(200).json({
-         message: "Post supprimé!"
-       }))
-       .catch((error) => res.status(400).json({
-         error
-       }));
- })
- .catch(() => res.status(500).json({
-   error: "L'utilisateur n'existe pas !"
- })); 
- }  
- else {
-     res.status(500).json({ error: "L'utilisateur n'existe pas !"})
- }
+exports.deletePost = async (req,res,next) => {
+   
+  await models.post.destroy({
+    where: {
+     id: Number(req.params.id)
+    }
+  });
+  return res.status(200).json({ message: "Element supprimé ! "}); 
+    
 }  
+
