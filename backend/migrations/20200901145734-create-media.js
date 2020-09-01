@@ -1,23 +1,39 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('commentaires', {
+    await queryInterface.createTable('media', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      iduserCommentaire:{
-        allowNull: false,
+      userId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Users',
           key: 'id'
         }
       },
-      contenu: {
-        allowNull:false,
+      mediaId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Posts',
+          key: 'id'
+        }
+      },
+      nom: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      type: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      lien: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
@@ -31,6 +47,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('commentaires');
+    await queryInterface.dropTable('media');
   }
 };

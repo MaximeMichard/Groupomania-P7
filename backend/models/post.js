@@ -4,17 +4,17 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class post extends Model {
-    static associate() {
-      post.associate = function (models) {
-        models.post.belongsTo(models.User, {
-          foreignKey: {
-            allowNull: false
-          }
-        });
-      }
+    
+    static associate(models) {
+      models.post.belongsTo(models.User, {
+        foreignKey: {
+          allowNull: false
+        }
+      })
     }
   };
   post.init({
+    userId: DataTypes.INTEGER,
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     attachment: DataTypes.STRING

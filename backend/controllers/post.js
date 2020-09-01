@@ -4,7 +4,8 @@ exports.createPost = (req,res,next) => {
    models.post.create({
        title:req.body.title,
        content:req.body.content,
-       attachment: req.body.attachment
+       attachment: req.body.attachment,
+       userId: req.userId
    })
    .then(newPost => res.status(201).json({ newPost}))
    .catch(err => { res.status(500).json({err})})
@@ -25,6 +26,8 @@ exports.getPost = (req,res,next) => {
   const newTitle = req.body.newTitle;
   const newContent= req.body.newContent;
   const newAttachment= req.body.newAttachment;
+  console.log('Dans le controller ! ');
+  console.log(req.userId);
   
   await models.post.update({ 
     title: newTitle, 
@@ -39,8 +42,8 @@ exports.getPost = (req,res,next) => {
 }
 
 exports.deletePost = async (req,res,next) => {
-   
-  await models.post.destroy({
+    
+  let resultat= await models.post.destroy({
     where: {
      id: Number(req.params.id)
     }

@@ -17,14 +17,14 @@ app.use((req, res, next) => { // Middleware (CORS) //
   next();
 });
 
-require("./connection"); 
+require('./connection');
 
 app.use(helmet());
 app.use(bodyParser.json());
 app.use('/multimedia', express.static(path.join(__dirname, 'images'))); // Application utilise Image //
-app.use('/post', postRoutes);
+app.use('/api/post', postRoutes);
 app.use('/api/auth', userRoutes);
-app.use('/commentaire', commentaireRoutes);
+app.use('/api/commentaire', commentaireRoutes);
 /*app.use('/media',mediaRoutes); */
 
 

@@ -8,7 +8,7 @@ const expressBouncer= require ("express-bouncer")(5000,600000,3); // Contre les 
 router.post('/signup', userCtrl.signup);
 router.post('/login',expressBouncer.block, userCtrl.login);
 router.get('/users/:id',auth,userCtrl.getUserProfile);
-router.put('/users/:id', userCtrl.updatePwd);
+router.put('/users/:id',auth, userCtrl.updatePwd);
 router.delete('/users/:id',auth,userCtrl.delete);
 
 module.exports= router; 

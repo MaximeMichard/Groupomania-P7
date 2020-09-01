@@ -1,10 +1,17 @@
 const models= require('../models');
 
 exports.createCommentaire = async (req,res,next) => {
-    await models.commentaire.create({
-        contenu: req.body.contenu
-    });
-    return res.status(200).json({ message:"Commentaire crée !"});
+    try{
+        let _commentaire= await models.commentaire.create({
+            contenu: req.body.contenu,
+            iduserCommentaire: id.user
+        });
+        return res.status(200).json({ _commentaire });
+    }
+    catch(err){
+        return res.status(404).json({ err});
+    }
+    
 }
 exports.getCommentaire =  async(req,res,next) => {
     await models.commentaire.findOne({
@@ -12,7 +19,7 @@ exports.getCommentaire =  async(req,res,next) => {
             id: Number(req.params.id)
            }
     });
-    return res.status(200).json({ commentaire });
+    return res.status(200).json({ message: 'requete ok' });
 }
 exports.updateCommentaire =  async(req,res,next) => {
     const newContenu= req.body.contenu;

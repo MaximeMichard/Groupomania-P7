@@ -105,6 +105,8 @@ exports.getUserProfile = (req,res,next) => {
 }
 exports.updatePwd= (req,res,next) => {
   const newPassword = req.body.newPassword;
+  console.log('Dans le controller ! ');
+  console.log(req.userId);
   if (schema.validate(newPassword)) {
       //Vérifie qu'il est différent de l'ancien
       models.User.findOne({
