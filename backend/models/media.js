@@ -6,7 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   class media extends Model {
 
     static associate(models) {
-      // define association here
+      models.media.belongsTo(models.User, {
+        foreignKey: {
+          allowNull: false
+        }
+      })
     }
   };
   media.init({
