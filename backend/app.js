@@ -5,7 +5,7 @@ const helmet= require ('helmet');
 const postRoutes= require ('./routes/post');
 const userRoutes= require ('./routes/user');
 const commentaireRoutes= require ('./routes/commentaire');
-const mediaRoutes= require ('./controllers/media');
+const mediaRoutes= require ('./routes/media');
 
 
 const app = express(); //Utilisation Express //
@@ -25,7 +25,7 @@ app.use('/multimedia', express.static(path.join(__dirname, 'images'))); // Appli
 app.use('/api/post', postRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/api/commentaire', commentaireRoutes);
-/*app.use('/media',mediaRoutes); */
+app.use('/api/media',mediaRoutes);
 
 
 module.exports = app; // Exportation pour le fichier server.js //

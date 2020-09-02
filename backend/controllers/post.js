@@ -21,15 +21,16 @@ exports.createPost = async(req,res,next) => {
 
 exports.getPost = async (req,res,next) => {
 
-try{
-  let _postget= await models.post.findOne({
+  try{
+    let _postget= await models.post.findOne({
     where: { id: Number(req.params.id) } 
-})
-return res.status (200).json ({ _postget});
-}
-catch (err) {
-  return res.status(500).json ( err); 
-}
+    })
+    return res.status (200).json ({ _postget});
+  }
+
+  catch (err) {
+    return res.status(500).json ( err); 
+  }
 
 }
 
