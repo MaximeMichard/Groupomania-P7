@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt"); //Plug in pour hasher les passwords //
 const jwt = require ('jsonwebtoken'); //Plug in pour sécuriser la connection avec des tokens uniques //
-const jwtutils= require ('../utils/jwt.utils');
 const models = require("../models"); //Importation du model User
 const passwordvalidator= require ('password-validator'); // Sécurité password // 
 require('dotenv').config();
@@ -141,11 +140,10 @@ exports.delete = async (req,res,next) => {
     try {
         let _userdelete = await  models.User.destroy({ // Supprimer le fichier de la BDD//
             where: { id: Number(req.params.id) }
-          })
-          return res.status(200).json({ _userdelete }); 
+        })
+        return res.status(200).json({ _userdelete }); 
     }
     catch(err){
         return res.status(500).json({ err});
-    }
-        
+    }          
 }

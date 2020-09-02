@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       })
       models.post.hasMany(models.commentaire)
+      models.post.hasMany(models.media)
     }
   };
   post.init({

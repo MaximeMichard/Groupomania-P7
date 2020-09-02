@@ -6,7 +6,12 @@ module.exports = (sequelize, DataTypes) => {
   class media extends Model {
 
     static associate(models) {
-      models.media.belongsTo(models.User, {
+      models.media.belongsTo(models.post, {
+        foreignKey: {
+          allowNull: false
+        }
+      })
+      models.media.belongsTo(models.commentaire, {
         foreignKey: {
           allowNull: false
         }

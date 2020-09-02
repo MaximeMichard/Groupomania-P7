@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         }
       })
+      models.commentaire.hasMany(models.media);
     }
   };
   commentaire.init({
