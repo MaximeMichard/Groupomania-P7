@@ -33,7 +33,7 @@ exports.signup = (req, res, next) => {
       error: Error.message= 'Schéma incorrect ! '
     });
   }
-  else if (schema.validate(req.body.password)){ // Schéma correct exact le script //
+  else if (schema.validate(req.body.password)){ // Schéma correct exact avec le script //
     models.User.findOne({
             attributes: ['email'],
             where: { email: email }
@@ -46,7 +46,7 @@ exports.signup = (req, res, next) => {
                             email: email,
                             username: username,
                             password: resBcrypt,
-                            isAdmin: 0 /* false */
+                            isAdmin: false
                         })
                             .then(newUser => { res.status(201).json({ 'userId': newUser.id }) })
                             .catch(err => {
@@ -94,19 +94,21 @@ exports.login = (req, res, next) => {
         .catch(err => { res.status(500).json({ err }) })
 };
 
-exports.getUserProfile = (req,res,next) => {
-    models.User.findOne({
-        where: { id: Number(req.params.id) } 
-    })
-    .then((User) => res.status(200).json(User))
-    .catch((error) => res.status(404).json({
-      error
-    }));
+exports.getUserProfile = async (req,res,next) => {
+    try{
+        let _userget= await models.User.findOne({
+            where: { id: Number(req.params.id) },
+            attributes:{ exclude: ['password','isAdmin']} 
+        })
+        return res.status(200).json({ _userget});
+        
+    }
+    catch(err){
+        return res.status(404).json({ err});
+    }
 }
 exports.updatePwd= (req,res,next) => {
   const newPassword = req.body.newPassword;
-  console.log('Dans le controller ! ');
-  console.log(req.userId);
   if (schema.validate(newPassword)) {
       //Vérifie qu'il est différent de l'ancien
       models.User.findOne({
@@ -135,28 +137,15 @@ exports.updatePwd= (req,res,next) => {
   }
     
 }
-exports.delete = (req,res,next) => {
-    if(req.params.id != null){
-       models.User.findOne({ //On cherche si l'utilisateur exite ou pas //
-    where: { id: Number(req.params.id) }
-    })
-    .then((User) => {
-        models.User.destroy({ // Supprimer le fichier de la BDD//
+exports.delete = async (req,res,next) => {
+    try {
+        let _userdelete = await  models.User.destroy({ // Supprimer le fichier de la BDD//
             where: { id: Number(req.params.id) }
           })
-          .then(() => res.status(200).json({
-            message: "Utilisateur supprimé!"
-          }))
-          .catch((error) => res.status(400).json({
-            error
-          }));
-    })
-    .catch((error) => res.status(500).json({
-      error
-    })); 
-    }  
-    else {
-        res.status(500).json({ error: "L'utilisateur n'existe pas !"})
+          return res.status(200).json({ _userdelete }); 
     }
-    
+    catch(err){
+        return res.status(500).json({ err});
+    }
+        
 }

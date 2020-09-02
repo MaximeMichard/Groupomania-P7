@@ -1,54 +1,74 @@
 const models= require ('../models');
 
-exports.createPost = (req,res,next) => {
-   models.post.create({
-       title:req.body.title,
-       content:req.body.content,
-       attachment: req.body.attachment,
-       userId: req.userId
-   })
-   .then(newPost => res.status(201).json({ newPost}))
-   .catch(err => { res.status(500).json({err})})
+exports.createPost = async(req,res,next) => {
+
+  try {
+    let _postcreate = await models.post.create({
+    userId: req.userId,
+    title:req.body.title,
+    content:req.body.content,
+    attachment: req.body.attachment
+  })
+    return res.status(200).json ({ _postcreate});
+  }
+  catch(err){
+    console.log( err); 
+    return res.status(500).json ({ err});
+  }
+   
+ 
 }
 
-exports.getPost = (req,res,next) => {
-  models.post.findOne({
+exports.getPost = async (req,res,next) => {
+
+try{
+  let _postget= await models.post.findOne({
     where: { id: Number(req.params.id) } 
 })
-.then((post) => res.status(200).json(post))
-.catch((error) => res.status(404).json({
-  error
-}));
+return res.status (200).json ({ _postget});
+}
+catch (err) {
+  return res.status(500).json ( err); 
+}
+
 }
 
  exports.updatePost = async (req,res,next) => {
-  const newPost= req.body;
   const newTitle = req.body.newTitle;
   const newContent= req.body.newContent;
   const newAttachment= req.body.newAttachment;
-  console.log('Dans le controller ! ');
-  console.log(req.userId);
-  
-  await models.post.update({ 
+
+  try {
+    let _postupdate=await models.post.update({ 
     title: newTitle, 
     content: newContent,
     attachment:newAttachment 
-  },{
-    where: {
-      id: Number(req.params.id)
-    }
-  });
-  return res.status(200).json({ newPost });
-}
+    },{
+    where: {id: Number(req.params.id)}
+    });
+    return res.status(200).json({ _postupdate });
+  }
 
+  catch(err){
+    return res.status(500).json ({ err});
+
+  } 
+
+}
+  
 exports.deletePost = async (req,res,next) => {
+   
+  try {
+    let _postdeleete= await models.post.destroy({
+    where: { id: Number(req.params.id) }
+    });
     
-  let resultat= await models.post.destroy({
-    where: {
-     id: Number(req.params.id)
-    }
-  });
-  return res.status(200).json({ message: "Element supprimé ! "}); 
+    return res.status(200).json({ _postdeleete}); 
+  }
+
+  catch(err){
+    return res.status(500).json ({ err});
+  }
     
 }  
 

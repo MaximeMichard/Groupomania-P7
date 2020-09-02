@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         }
       })
+      models.commentaire.belongsTo(models.post,{
+        foreignKey:{
+          allowNull: false
+        }
+      })
     }
   };
   commentaire.init({

@@ -2,40 +2,61 @@ const models= require('../models');
 
 exports.createCommentaire = async (req,res,next) => {
     try{
-        let _commentaire= await models.commentaire.create({
+        let _commentairecreate= await models.commentaire.create({
             contenu: req.body.contenu,
-            iduserCommentaire: id.user
+            userId: commentaire.UserId ,
+            commentaireId: commentaire.postId
         });
-        return res.status(200).json({ _commentaire });
+        return res.status(200).json({ _commentairecreate });
+    }
+    catch(err){
+        console.log(err);
+        return res.status(404).json({ err});
+    }
+    
+}
+exports.getCommentaire =  async(req,res,next) => {
+    try{
+       let _commentaireGet= await models.commentaire.findOne({
+            where: {
+                id: Number(req.params.id)
+               }
+        });
+        return res.status(200).json({ _commentaireGet });
     }
     catch(err){
         return res.status(404).json({ err});
     }
     
 }
-exports.getCommentaire =  async(req,res,next) => {
-    await models.commentaire.findOne({
-        where: {
-            id: Number(req.params.id)
-           }
-    });
-    return res.status(200).json({ message: 'requete ok' });
-}
 exports.updateCommentaire =  async(req,res,next) => {
-    const newContenu= req.body.contenu;
-    await models.commentaire.update({ 
-        content: newContenu 
-      },{
-        where: {
-          id: Number(req.params.id)
-        }
-      });
-      return res.status(200).json({ commentaire });
+    try{
+        const newContenu= req.body.contenu;
+        let _commentaireupdate = await models.commentaire.update({ 
+            content: newContenu 
+          },{
+            where: {
+              id: Number(req.params.id)
+            }
+          });
+          return res.status(200).json({ _commentaireupdate });
+    }
+    catch(err){
+        return res.status(404).json({ err});
+    }
+    
+    
     
 }
 exports.deleteCommentaire =  async(req,res,next) => {
-    await models.commentaire.destroy({
-        where: { id: Number (req.params.id)}
-    })
-    return res.Status(200).json({message: "Commentaire Supprimé! "})
+    try{
+        let _commentairedelete =  await models.commentaire.destroy({
+            where: { id: Number (req.params.id)}
+        })
+        return res.Status(200).json({_commentairedelete});
+    }
+    catch (err){
+        return res.status(404).json ({ err}); 
+    }
+   
 }

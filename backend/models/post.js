@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         }
       })
+      models.post.hasMany(models.commentaire)
     }
   };
   post.init({
