@@ -4,7 +4,7 @@ exports.createPost = async(req,res,next) => {
 
   try {
     let _postcreate = await models.post.create({
-    userId: req.userId,
+    UserId: req.userId,
     title:req.body.title,
     content:req.body.content,
     attachment: req.body.attachment
