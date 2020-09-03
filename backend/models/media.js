@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   media.init({
-    userId: DataTypes.INTEGER,
-    mediaId: DataTypes.INTEGER,
+    postId: DataTypes.INTEGER,
+    commentaireId: DataTypes.INTEGER,
     nom: DataTypes.STRING,
     type: DataTypes.STRING,
     lien: DataTypes.STRING

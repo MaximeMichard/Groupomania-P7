@@ -4,7 +4,7 @@ exports.createPost = async(req,res,next) => {
 
   try {
     let _postcreate = await models.post.create({
-    UserId: req.userId,
+    UserId: req.body.UserId, //req.userId //
     title:req.body.title,
     content:req.body.content,
     attachment: req.body.attachment
@@ -13,7 +13,7 @@ exports.createPost = async(req,res,next) => {
   }
   catch(err){
     console.log( err); 
-    return res.status(500).json ({ err});
+    return res.status(500).json ({ error: Error.message= 'Utilisateur existe pas!' });
   }
    
  
@@ -40,19 +40,20 @@ exports.getPost = async (req,res,next) => {
   const newAttachment= req.body.newAttachment;
 
   try {
-    let _postupdate=await models.post.update({ 
-    title: newTitle, 
-    content: newContent,
-    attachment:newAttachment 
-    },{
-    where: {id: Number(req.params.id)}
-    });
-    return res.status(200).json({ _postupdate });
+    await models.post.update({ 
+      title: newTitle, 
+      content: newContent,
+      attachment:newAttachment 
+    },{where: {id: Number(req.params.id)}});
+
+    let _postget= await models.post.findOne({
+      where: { id: Number(req.params.id) } 
+      });
+      return res.status(200).json({ _postget});
   }
 
   catch(err){
     return res.status(500).json ({ err});
-
   } 
 
 }

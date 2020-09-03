@@ -16,11 +16,11 @@ module.exports = {
           key: 'id'
         }
       },
-      commentaireId: {
+      postId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Posts',
+          model: 'posts',
           key: 'id'
         }
       },

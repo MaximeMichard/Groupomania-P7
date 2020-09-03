@@ -3,9 +3,9 @@ const models= require('../models');
 exports.createCommentaire = async (req,res,next) => {
     try{
         let _commentairecreate= await models.commentaire.create({
-            contenu: req.body.contenu,
-            userId: commentaire.UserId ,
-            commentaireId: commentaire.postId
+            UserId: req.userId,
+            postId: req.body.postId,
+            content: req.body.content,
         });
         return res.status(200).json({ _commentairecreate });
     }

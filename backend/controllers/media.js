@@ -3,8 +3,8 @@ const models= require('../models');
 exports.createMedia = async (req,res,next) => {
     try{
         let _mediaCreate= await models.media.create({
-            userId: req.userId,
-            mediaId: req.postId,
+            postId: req.postId,
+            commentaireId: req.commentaireId,
             nom:req.body.nom,
             type:req.body.type,
             lien: req.body.lien
