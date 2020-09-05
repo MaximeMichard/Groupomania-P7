@@ -3,8 +3,8 @@ const models= require('../models');
 exports.createMedia = async (req,res,next) => {
     try{
         let _mediaCreate= await models.media.create({
-            postId: req.postId,
-            commentaireId: req.commentaireId,
+            postId: req.body.postId,
+            commentaireId: req.body.commentaireId,
             nom:req.body.nom,
             type:req.body.type,
             lien: req.body.lien
@@ -31,15 +31,21 @@ exports.putMedia = async(req,res,next) => {
     const newType= req.body.newType;
     const newLien= req.body.newLien;
     try{
-        let _mediaPut= await models.media.update({
+        await models.media.update({
             nom: newNom,
             type: newType,
-            lien:newLien,
-            where : { id : Number (req.params.id)}
+            lien: newLien    
+        },{
+            where: {
+              id: Number(req.params.id)
+            }
+        });
+        let _mediaget= await models.post.findOne({
+            where : { id: Number(req.params.id)}
         })
-        return res.status(200).json ({ _mediaPut});
+        return res.status(200).json ({ _mediaget});
     }
-    catch(err){
+    catch(err){ 
         return res.status(500).json ({ err});
     }
 }

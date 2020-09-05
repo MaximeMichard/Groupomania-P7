@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         }
       })
-      models.post.hasMany(models.commentaire)
+      models.post.hasMany(models.commentaire,{ onDelete: 'cascade',
+      hooks: true })
       models.post.hasMany(models.media)
     }
   };
