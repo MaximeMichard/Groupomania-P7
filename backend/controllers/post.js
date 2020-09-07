@@ -55,22 +55,24 @@ exports.getPost = async (req,res,next) => {
   catch(err){
     return res.status(500).json ({ err});
   } 
-
 }
   
 exports.deletePost = async (req,res,next) => {
    
   try {
-    let _postdeleete= await models.post.destroy({
+    let _postdelete= await models.post.destroy({
     where: { id: Number(req.params.id) }
     });
+    if (_postdelete != null){
+      return res.status(404).json({ message: 'Element existe pas ! '})
+    }
     
-    return res.status(200).json({ _postdeleete}); 
+    return res.status(200).json({ _postdelete});
+    
   }
 
   catch(err){
-    return res.status(500).json ({ err});
+    return res.status(500).json ({ err });
   }
-    
 }  
 

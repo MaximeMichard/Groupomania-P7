@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       })
       models.media.belongsTo(models.commentaire, {
         foreignKey: {
-          allowNull: false
+          allowNull: false,
         }
       })
     }
