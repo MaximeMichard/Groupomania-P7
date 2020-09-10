@@ -8,15 +8,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.post.belongsTo(models.User, {
         foreignKey:{
-          allowNull: false,
-          name: 'UserId',
-          onDelete: 'cascade',
-          onUpdate: 'cascade'
+          allowNull: false
         }
       })
-      models.post.hasMany(models.commentaire,{ onDelete: 'cascade',
-      hooks: true })
-      models.post.hasMany(models.media)
+      models.post.hasMany(models.commentaire,{onDelete:'cascade'})
+      models.post.hasMany(models.media,{onDelete:'cascade'})
     }
   };
   post.init({

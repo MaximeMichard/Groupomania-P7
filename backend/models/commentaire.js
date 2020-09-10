@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         }
       })
-      models.commentaire.hasMany(models.media);
+      models.commentaire.hasMany(models.media,{onDelete:'cascade'});
     }
   };
   commentaire.init({

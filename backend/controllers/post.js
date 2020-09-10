@@ -4,19 +4,18 @@ exports.createPost = async(req,res,next) => {
 
   try {
     let _postcreate = await models.post.create({
-    UserId: req.body.UserId, //req.userId //
+    UserId: req.userId,
     title:req.body.title,
     content:req.body.content,
     attachment: req.body.attachment
   })
-    return res.status(200).json ({ _postcreate});
+    return res.status(200).json (_postcreate);
   }
   catch(err){
     console.log( err); 
     return res.status(500).json ({ error: Error.message= 'Utilisateur existe pas!' });
   }
    
- 
 }
 
 exports.getPost = async (req,res,next) => {
@@ -25,7 +24,7 @@ exports.getPost = async (req,res,next) => {
     let _postget= await models.post.findOne({
     where: { id: Number(req.params.id) } 
     })
-    return res.status (200).json ({ _postget});
+    return res.status (200).json ( _postget);
   }
 
   catch (err) {
@@ -49,30 +48,24 @@ exports.getPost = async (req,res,next) => {
     let _postget= await models.post.findOne({
       where: { id: Number(req.params.id) } 
       });
-      return res.status(200).json({ _postget});
+      return res.status(200).json( _postget);
   }
 
   catch(err){
-    return res.status(500).json ({ err});
+    return res.status(500).json (err);
   } 
 }
   
-exports.deletePost = async (req,res,next) => {
-   
+exports.deletePost = async (req,res,next) => {  
   try {
     let _postdelete= await models.post.destroy({
-    where: { id: Number(req.params.id) }
+      where: {id: Number(req.params.id)}
     });
-    if (_postdelete != null){
-      return res.status(404).json({ message: 'Element existe pas ! '})
-    }
-    
-    return res.status(200).json({ _postdelete});
-    
+    return res.status(200).json({_postdelete}); 
   }
-
   catch(err){
-    return res.status(500).json ({ err });
+    console.log(err);
+    return res.status(500).json ({err});
   }
 }  
 

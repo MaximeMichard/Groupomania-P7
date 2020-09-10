@@ -14,7 +14,8 @@ module.exports = {
         references: {
           model: 'posts',
           key: 'id'
-        }
+        },
+        onDelete:'cascade'
       },
       commentaireId: {
         type: Sequelize.INTEGER,
@@ -22,7 +23,8 @@ module.exports = {
         references: {
           model: 'commentaires',
           key: 'id'
-        }
+        },
+        onDelete:'cascade'
       },
       nom: {
         allowNull: false,

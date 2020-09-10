@@ -31,7 +31,7 @@ exports.putMedia = async(req,res,next) => {
     const newType= req.body.newType;
     const newLien= req.body.newLien;
     try{
-        await models.media.update({
+        let _mediaupdate= await models.media.update({
             nom: newNom,
             type: newType,
             lien: newLien    
@@ -39,11 +39,13 @@ exports.putMedia = async(req,res,next) => {
             where: {
               id: Number(req.params.id)
             }
+            
         });
         let _mediaget= await models.post.findOne({
-            where : { id: Number(req.params.id)}
-        })
-        return res.status(200).json ({ _mediaget});
+            where: { id: Number(req.params.id) } 
+            });
+            return res.status(200).json({ _mediaupdate});
+        
     }
     catch(err){ 
         return res.status(500).json ({ err});
@@ -51,12 +53,13 @@ exports.putMedia = async(req,res,next) => {
 }
 exports.deleteMedia = async (req,res,next) => {
     try{
-        let _mediadelete= await models.media.delete({
+        let _mediadelete= await models.media.destroy({
             where:{id: Number(req.params.id)}
         })
         return res.status(200).json ({ _mediadelete});
     }
     catch(err){
+        console.log(err);
         return res.status(500).json ({ err});
     }
 }

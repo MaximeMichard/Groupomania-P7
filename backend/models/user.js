@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     
     static associate(models) {
-      models.User.hasMany(models.post);
-      models.User.hasMany(models.commentaire);
+      models.User.hasMany(models.post,{onDelete:'cascade'});
+      models.User.hasMany(models.commentaire),{onDelete:'cascade'};
     }
   };
   User.init({
