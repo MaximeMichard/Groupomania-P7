@@ -99,7 +99,7 @@ exports.getUserProfile = async (req,res,next) => {
             where: { id: Number(req.params.id) },
             attributes:{ exclude: ['password','isAdmin']} 
         })
-        return res.status(200).json({ _userget});
+        return res.status(200).json( _userget);
         
     }
     catch(err){
@@ -141,7 +141,7 @@ exports.delete = async (req,res,next) => {
         let _userdelete = await  models.User.destroy({ // Supprimer le fichier de la BDD//
             where: { id: Number(req.params.id) }
         })
-        return res.status(200).json({ _userdelete }); 
+        return res.status(200).json( _userdelete); 
     }
     catch(err){
         return res.status(500).json({ err});
