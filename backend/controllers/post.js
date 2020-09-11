@@ -32,6 +32,18 @@ exports.getPost = async (req,res,next) => {
   }
 
 }
+exports.getPostCommentaire= async (req,res,next)=> {
+  try{
+    let _get= await models.post.findOne({
+      where: { id: Number(req.params.id)}
+    })
+    return res.status (200).json (_get); 
+  }
+  catch(err){
+    console.log(err);
+    return res.status(500).json(err);
+  }
+}
 
  exports.updatePost = async (req,res,next) => {
   const newTitle = req.body.newTitle;

@@ -8,6 +8,7 @@ const multer = require("../middleware/multer-config"); //Importation de multer, 
 
 router.post("/",auth,postCtrl.createPost);
 router.get("/:id",auth,postCtrl.getPost);
+router.get("/:id/commentaire",auth,postCtrl.getPostCommentaire);
 router.put("/:id",auth,postCtrl.updatePost);
 router.delete("/:id",auth,postCtrl.deletePost);
 
