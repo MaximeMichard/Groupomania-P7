@@ -1,1 +1,21 @@
-<header>Header</header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a routerLink="accueil"><img src="./icon-left-font-monochrome-white.png" alt=""></a>
+  <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <ul class="list-unstyled d-flex">
+        <li routerLinkActive="active"><a class="navbar-brand" routerLink="accueil">Accueil</a></li>
+        <li routerLinkActive="active"><a class="navbar-brand" routerLink="forum">Forum</a></li>
+        <li routerLinkActive="active"><a class="navbar-brand" routerLink="auth/me">Mon compte</a></li>
+      </ul>
+    </div>
+    <div class="navbar-nav">
+      <li routerLinkActive="active"><a class="navbar-brand" routerLink="auth/signin">Se connecter au compte</a></li>
+      <li routerLinkActive="active"><a class="navbar-brand" routerLink="auth/signup">Création d'un compte</a></li>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <router-outlet></router-outlet>
+  </div>
+</div>
