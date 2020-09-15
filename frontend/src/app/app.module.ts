@@ -16,6 +16,8 @@ import { MeComponent } from './auth/me/me.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { ForumComponent } from './forum/forum.component';
 import { ErrorSearchComponent } from './error-search/error-search.component';
+import { AuthService } from './services/auth.service';
+import { AuthorizationComponent } from './auth/authorization/authorization.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -39,13 +41,16 @@ const appRoutes: Routes = [
     AccueilComponent,
     ForumComponent,
     ErrorSearchComponent,
+    AuthorizationComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
+    HttpClientModule
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    AuthService,
   ],
   bootstrap: [AppComponent]
 })
