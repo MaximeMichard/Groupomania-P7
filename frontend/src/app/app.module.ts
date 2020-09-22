@@ -2,10 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
-
-import { AuthGuard} from './services/auth-guard.service';
 import { Routes, RouterModule} from '@angular/router';
 
+import { AuthGuard} from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
+import { Userservice } from './services/user.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -16,15 +17,15 @@ import { MeComponent } from './auth/me/me.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { ForumComponent } from './forum/forum.component';
 import { ErrorSearchComponent } from './error-search/error-search.component';
-import { AuthService } from './services/auth.service';
 import { AuthorizationComponent } from './auth/authorization/authorization.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/signin', component: SigninComponent },
-  { path: 'auth/me', component: MeComponent },
-  { path: 'accueil', component: AccueilComponent },
-  { path: 'forum', component: ForumComponent },
+  { path: 'auth/me',component: MeComponent },
+  { path: 'accueil',canActivate:[AuthGuard],component: AccueilComponent },
+  { path: 'forum',component: ForumComponent },
   { path: 'not-found', component: ErrorSearchComponent },
   { path: '**', redirectTo: '/not-found' }
 ];
@@ -46,11 +47,14 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [
     AuthGuard,
     AuthService,
+    Userservice
   ],
   bootstrap: [AppComponent]
 })

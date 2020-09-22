@@ -1,6 +1,10 @@
+/* import { UserService } from '../services/user.service'; */
+
 export class AuthService{
     isAuth= false;
 
+    constructor(/* private userservice:UserService */){}
+    
     signIn(){
         return new Promise((resolve,reject) => {
             setTimeout(()=> {
@@ -13,4 +17,9 @@ export class AuthService{
     signOut(){
         this.isAuth= false;
     }
+    getToken(){
+        /* localStorage.setItem('token',response.token); */
+    }
+
+    
 }
