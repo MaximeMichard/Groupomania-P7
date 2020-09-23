@@ -14,6 +14,7 @@ export class SigninComponent implements OnInit {
 
   user: User;
   error: boolean;
+  authUser: boolean;
 
   constructor(private userservice: Userservice,
               private authService: AuthService,
@@ -28,6 +29,10 @@ export class SigninComponent implements OnInit {
     if(this.user.email != null  && this.user.password != null){
       this.userservice.loginUser(this.user).subscribe(response =>{
         if(response.userId != null){
+            this.authService.signIn().then(()=>{
+            this.authUser= this.authService.isAuth;
+            this.router.navigate(['/forum']);
+          })
           this.error= false;
            //A modifié pour afficher un message d'alerte //
         }

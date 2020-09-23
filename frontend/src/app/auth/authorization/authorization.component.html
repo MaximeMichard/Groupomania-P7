@@ -1,1 +1,2 @@
-<p>authorization works!</p>
+<button class="btn btn-success" *ngIf="!authUser"(click)="onSignIn()">Se connecter</button>
+<button class="btn btn-danger"*ngIf="authUser"(click)="onSignOut()">Se déconnecter</button>

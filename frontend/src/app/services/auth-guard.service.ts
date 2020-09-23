@@ -16,7 +16,7 @@ constructor(private authService: AuthService, private router: Router){
         if(this.authService.isAuth){
             return true;
         }else{
-            this.router.navigate(['/auth']);
+            this.router.navigate(['/auth/signin']);
         }
     }
 }

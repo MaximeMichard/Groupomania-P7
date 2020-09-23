@@ -1,7 +1,5 @@
-/* import { UserService } from '../services/user.service'; */
-
 export class AuthService{
-    isAuth= false;
+    isAuth: boolean;
 
     constructor(/* private userservice:UserService */){}
     
@@ -10,6 +8,7 @@ export class AuthService{
             setTimeout(()=> {
                 this.isAuth = true;
                 resolve(true);
+                
             }, 2000
             );
         });
