@@ -26,7 +26,6 @@ export class SignupComponent implements OnInit {
     if(this.user.email.length > 0 && this.user.password.length > 0 &&  this.user.username.length > 0){
       this.Userservice.postUser(this.user).subscribe(response =>{
         if(response.userId != null){
-          this.user = new User();//A modifié pour afficher un message d'alerte //
           this.error = false ; 
           setTimeout(()=>{
             this.router.navigate(['auth/signin']);

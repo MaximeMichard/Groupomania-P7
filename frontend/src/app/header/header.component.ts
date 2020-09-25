@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { Component, OnInit,DoCheck } from '@angular/core';
+import { Userservice } from '../services/user.service';
 import { Router } from '@angular/router';
 
 
@@ -8,14 +8,21 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, DoCheck {
 
+  userConnected: any;
 
-  constructor () {}
+  constructor (private Userservice: Userservice,
+              private router: Router) {}
+
   ngOnInit(): void {
   }
 
-  
-  
-
+  ngDoCheck(){
+    this.userConnected = this.Userservice.getSavedUser();
+  }
+  signOut(){
+    this.Userservice.deconnectionUser(); 
+    this.router.navigate(['/auth/signin']); 
+  }
 }

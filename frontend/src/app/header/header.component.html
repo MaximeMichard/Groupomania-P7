@@ -1,16 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a routerLink="accueil"> <img src="../../assets/icon-left-font-monochrome-white.png" alt="icone"></a>
-  <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
+  <div><a routerLink="accueil"> <img src="../../assets/icon-left-font-monochrome-white.png" alt="icone"></a></div>
+  <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+    <div class="navbar-nav" *ngIf="userConnected !== null">
       <ul class="list-unstyled d-flex">
+        <li class="mr-5" routerLinkActive="active"><a class="navbar-brand" routerLink="forum/createPost">Publier votre Post</a></li>
         <li routerLinkActive="active"><a class="navbar-brand" routerLink="accueil">Accueil</a></li>
         <li routerLinkActive="active"><a class="navbar-brand" routerLink="forum">Forum</a></li>
         <li routerLinkActive="active"><a class="navbar-brand" routerLink="auth/me">Mon compte</a></li>
+        <button class="btn btn-danger ml-auto p-2" (click)="signOut()" >Se déconnecter</button>
       </ul>
     </div>
-    <div class="navbar-nav">
+    <div class="navbar-nav" *ngIf="userConnected == null">
       <li routerLinkActive="active"><a class="navbar-brand" routerLink="auth/signin">Se connecter au compte</a></li>
-      <li routerLinkActive="active"><a class="navbar-brand" routerLink="auth/signup">Création d'un compte</a></li>      
+      <li routerLinkActive="active"><a class="navbar-brand" routerLink="auth/signup">Création d'un compte</a></li>   
     </div>
   </div>
 </nav>

@@ -1,20 +1,18 @@
-<form class="d-flex">
-    <div class="col-lg-6">
-        <div class="form-group">
-            <label >Email</label>
-            <!-- {{user.email}} -->
-          </div>
-          <div class="form-group">
-            <label >Utilisateur</label>
-            <!-- {{user.username}} -->
-          </div>
+<form >
+  <h1> Information personnelle</h1>
+    <div class="form-group">
+        <label >Email</label>
+        <input type="email" class="form-control" name="email" id="email">
+      </div>
+      <div class="form-group">
+        <label >Utilisateur</label>
+        <input type="text" class="form-control" name="username" id="username">
+      </div>
+    <button class="btn btn-primary">Modifier</button>
+    <button class="btn btn-danger ml-4">Supprimer mon compte</button>
+    <div class="form-group pt-3">
+      <label>Password</label>
+      <input type="password" class="form-control" name="password" id="password">
     </div>
-    <div class="col-lg-6 d-flex flex-column justify-content-center align-items-center p-5">
-        <div class="form-group">
-            <a href=""><label class="btn btn-primary">Modifier</label></a>
-          </div>
-          <div class="form-group">
-            <a href=""><label class="btn btn-primary">Supprimer mon compte</label></a>
-          </div>
-    </div>
+    <button class="btn btn-primary">Modifier password</button>      
   </form>

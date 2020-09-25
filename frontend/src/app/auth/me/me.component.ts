@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Userservice} from '../../services/user.service';
+import{ HttpParams } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-me',
@@ -8,9 +11,24 @@ import { Userservice} from '../../services/user.service';
 })
 export class MeComponent implements OnInit {
 
+  id: any;
+
   constructor(private userService: Userservice) { }
 
   ngOnInit(): void {
   }
+  infoUser(){
+    this.userService.getSavedUser()
+    this.userService.getUser(this.id)
+    .subscribe((response)=>
+    {
+      console.log(response);
+    })
 
+    
+  }
+
+  
+
+  
 }

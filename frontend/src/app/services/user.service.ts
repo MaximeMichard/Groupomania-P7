@@ -4,12 +4,10 @@ import { HttpClient,HttpParams,HttpHeaders,HttpRequest} from '@angular/common/ht
 import{ Observable, throwError} from 'rxjs';
 import { catchError,retry} from 'rxjs/operators';
 import { Injectable} from'@angular/core';
-import { convertPropertyBindingBuiltins } from '@angular/compiler/src/compiler_util/expression_converter';
 
 @Injectable()
 
 export class Userservice{
-
 
      constructor(private HttpClient: HttpClient){}
 
@@ -21,17 +19,40 @@ export class Userservice{
     }
 
     loginUser(loginUser:User){
-        return this.HttpClient.post<any>('http://localhost:3000/api/auth/login/', loginUser)
+        return this.HttpClient.post<any>('http://localhost:3000/api/auth/login/', loginUser);
     }
 
-    getUser(){
-        return this.HttpClient.get<any>('http://localhost:3000/api/auth/users/'+ '')
+    getUser(id){
+        let params = new HttpParams().set('?','?')
+        let headers = new HttpHeaders().set('Authorization','?')
+        return this.HttpClient.get<any>('http://localhost:3000/api/auth/users/' + id , {params});
     }
-    putUser(newUser:User){
-        return this.HttpClient.put<any>('http://localhost:3000/api/auth/users/', newUser)
+
+    getTest(){
+        return this.HttpClient.get<any>("https://jsonplaceholder.typicode.com/todos/");
     }
-    deleteUser(){
-        return this.HttpClient.delete<any>('http://localhost:3000/api/auth/users/' + '')
+
+    putUser(id ,newUser:User){
+        return this.HttpClient.put<any>('http://localhost:3000/api/auth/users/' + id, newUser);
+    }
+
+    deleteUser(id){
+        return this.HttpClient.delete<any>('http://localhost:3000/api/auth/users/' + id);
+    }
+
+    //Fonction qui permet de sauvegarder les infos du user connecter (id,token) dans le local storage // 
+    saveUser(user:any){
+        localStorage.setItem('groupomania_user', JSON.stringify(user));
+    }
+
+    //Fonction qui permet de recupérer les infos du user connecter // 
+    getSavedUser(){
+        let user = localStorage.getItem('groupomania_user');
+        return JSON.parse(user) || null; 
+    }
+
+    deconnectionUser(){
+        localStorage.clear(); 
     }
 
 }
