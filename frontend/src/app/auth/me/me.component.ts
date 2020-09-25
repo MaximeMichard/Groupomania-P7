@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Userservice} from '../../services/user.service';
-import{ HttpParams } from '@angular/common/http';
-import { ThrowStmt } from '@angular/compiler';
 import { User } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,30 +12,45 @@ import { User } from 'src/app/models/user.model';
 export class MeComponent implements OnInit {
 
   user: User;
-  id: any;
-  username: any;
-  email:any;
+  error: boolean;
+  
 
-  constructor(private userService: Userservice) { 
-     this.user= new User();
+  constructor(private userService: Userservice,
+              private router : Router) { 
+     this.user = new User();
+     this.user.id = this.userService.getSavedUser().userId;
+     this.user.token = this.userService.getSavedUser().token; 
   }
 
   ngOnInit(): void {
-  }
-
-  infoUser(){
-    this.id= this.userService.getSavedUser();
-    console.log(this.id.userId);
-    this.userService.getUser(this.id.userId)
+    this.userService.getUser(this.user)
     .subscribe((response)=>{
-      console.log(response.username);
-      this.username = response.username;
-      this.email=response.email;
+      this.user.email = response.email;
+      this.user.username = response.username;
+      this.error = false;
+    },error => {
+      this.error = true; 
     })
   }
- 
-  updateUser(){
-    
+
+  update(){
+    if(this.user.password.length > 0){
+      this.userService.putUser(this.user)
+      .subscribe((response)=>{
+        console.log(response);
+      })
+    }
+  }
+
+  delete(){
+    this.userService.deleteUser(this.user)
+    .subscribe((response) =>{
+      console.log(response);
+      if (response === 1 || response === "1"){
+        this.userService.deconnectionUser();
+        this.router.navigate(['/auth/signin']);
+      }
+    })
   }
 
 }

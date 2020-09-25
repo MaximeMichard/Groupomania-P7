@@ -9,9 +9,15 @@ import { Injectable} from'@angular/core';
 
 export class Userservice{
 
-    id:any;
+    id : any;
+    headers : HttpHeaders;
 
-     constructor(private HttpClient: HttpClient){}
+     constructor(private HttpClient: HttpClient){
+         if(this.getSavedUser() != null){
+            let token = this.getSavedUser().token;
+            this.headers = new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': `Token ${token}`});
+        }
+     }
 
      ngOnInit(): void {
     }
@@ -24,24 +30,16 @@ export class Userservice{
         return this.HttpClient.post<any>('http://localhost:3000/api/auth/login/', loginUser);
     }
 
-    getUser(id){
-        this.id= this.getSavedUser();
-        let token= this.id.token;
-        console.log(token);
-        let headers = new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': `Token ${token}`});
-        return this.HttpClient.get<any>('http://localhost:3000/api/auth/users/' + id , { headers : headers});
+    getUser(user){
+        return this.HttpClient.get<any>('http://localhost:3000/api/auth/users/' + user.id , { headers : this.headers});
+    }
+    
+    putUser(user){
+        return this.HttpClient.put<any>('http://localhost:3000/api/auth/users/' + user.id, {"newPassword" : user.password }, { headers : this.headers});
     }
 
-    getTest(){
-        return this.HttpClient.get<any>("https://jsonplaceholder.typicode.com/todos/");
-    }
-
-    putUser(id ,newUser:User){
-        return this.HttpClient.put<any>('http://localhost:3000/api/auth/users/' + id, newUser);
-    }
-
-    deleteUser(id){
-        return this.HttpClient.delete<any>('http://localhost:3000/api/auth/users/' + id);
+    deleteUser(user){
+        return this.HttpClient.delete<any>('http://localhost:3000/api/auth/users/' + user.id , { headers : this.headers} );
     }
 
     //Fonction qui permet de sauvegarder les infos du user connecter (id,token) dans le local storage // 
