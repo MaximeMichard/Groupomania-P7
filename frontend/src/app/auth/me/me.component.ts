@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Userservice} from '../../services/user.service';
 import{ HttpParams } from '@angular/common/http';
+import { ThrowStmt } from '@angular/compiler';
+import { User } from 'src/app/models/user.model';
 
 
 @Component({
@@ -11,24 +13,31 @@ import{ HttpParams } from '@angular/common/http';
 })
 export class MeComponent implements OnInit {
 
+  user: User;
   id: any;
+  username: any;
+  email:any;
 
-  constructor(private userService: Userservice) { }
+  constructor(private userService: Userservice) { 
+     this.user= new User();
+  }
 
   ngOnInit(): void {
   }
-  infoUser(){
-    this.userService.getSavedUser()
-    this.userService.getUser(this.id)
-    .subscribe((response)=>
-    {
-      console.log(response);
-    })
 
+  infoUser(){
+    this.id= this.userService.getSavedUser();
+    console.log(this.id.userId);
+    this.userService.getUser(this.id.userId)
+    .subscribe((response)=>{
+      console.log(response.username);
+      this.username = response.username;
+      this.email=response.email;
+    })
+  }
+ 
+  updateUser(){
     
   }
 
-  
-
-  
 }

@@ -9,6 +9,8 @@ import { Injectable} from'@angular/core';
 
 export class Userservice{
 
+    id:any;
+
      constructor(private HttpClient: HttpClient){}
 
      ngOnInit(): void {
@@ -23,9 +25,11 @@ export class Userservice{
     }
 
     getUser(id){
-        let params = new HttpParams().set('?','?')
-        let headers = new HttpHeaders().set('Authorization','?')
-        return this.HttpClient.get<any>('http://localhost:3000/api/auth/users/' + id , {params});
+        this.id= this.getSavedUser();
+        let token= this.id.token;
+        console.log(token);
+        let headers = new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': `Token ${token}`});
+        return this.HttpClient.get<any>('http://localhost:3000/api/auth/users/' + id , { headers : headers});
     }
 
     getTest(){
@@ -51,6 +55,7 @@ export class Userservice{
         return JSON.parse(user) || null; 
     }
 
+    //Fonction qui permet la déconnection avec la suppression du local storage (avec une redirection) par la suite//
     deconnectionUser(){
         localStorage.clear(); 
     }
