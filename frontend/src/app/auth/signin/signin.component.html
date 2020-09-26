@@ -1,11 +1,11 @@
 <form (ngSubmit)="onSubmit(f)" #f="ngForm">
   <div class="form-group" >
     <label for="email" >Email</label>
-    <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email">
+    <input type="email" class="form-control" id="email" name="email" required email [(ngModel)]="user.email" #inputEmail="ngModel">
   </div>
   <div class="form-group">
-    <label >Password</label>
-    <input type="password" class="form-control" name="password" [(ngModel)]="user.password">
+    <label>Password</label>
+    <input type="password" class="form-control" name="password" required minlength="4" maxlength="15" [(ngModel)]="user.password" #inputPassword="ngModel">
     
   </div>
   <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Se connecter</button>

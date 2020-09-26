@@ -27,9 +27,8 @@ export class MeComponent implements OnInit {
     .subscribe((response)=>{
       this.user.email = response.email;
       this.user.username = response.username;
-      this.error = false;
     },error => {
-      this.error = true; 
+       return error;
     })
   }
 
@@ -37,7 +36,7 @@ export class MeComponent implements OnInit {
     if(this.user.password.length > 0){
       this.userService.putUser(this.user)
       .subscribe((response)=>{
-        console.log(response);
+        this.error = false;
       })
     }
   }
@@ -47,6 +46,7 @@ export class MeComponent implements OnInit {
     .subscribe((response) =>{
       console.log(response);
       if (response === 1 || response === "1"){
+        alert('Votre compte a été supprimé !');
         this.userService.deconnectionUser();
         this.router.navigate(['/auth/signin']);
       }
