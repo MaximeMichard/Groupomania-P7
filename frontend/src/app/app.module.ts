@@ -17,7 +17,6 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { ForumComponent } from './forum/forum.component';
 import { ErrorSearchComponent } from './error-search/error-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ForumPostComponent } from './forum/forum-post/forum-post.component';
 import { ListCommentaireComponent } from './forum/list-commentaire/list-commentaire.component';
 import { CommentaireComponent } from './forum/commentaire/commentaire.component';
 import { CreatepostComponent } from './forum/createpost/createpost.component';
@@ -44,7 +43,6 @@ const appRoutes: Routes = [
     AccueilComponent,
     ForumComponent,
     ErrorSearchComponent,
-    ForumPostComponent,
     ListCommentaireComponent,
     CommentaireComponent,
     CreatepostComponent,
