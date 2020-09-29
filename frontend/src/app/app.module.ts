@@ -7,6 +7,8 @@ import { Routes, RouterModule} from '@angular/router';
 import { AuthGuard} from './services/auth-guard.service';
 import { Userservice } from './services/user.service';
 import { Postservice } from './services/post.service';
+import { Mediaservice} from './services/media.service';
+import { Commentaireservice} from './services/commentaire.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -57,7 +59,9 @@ const appRoutes: Routes = [
   providers: [
     AuthGuard,
     Userservice,
-    Postservice
+    Postservice,
+    Mediaservice,
+    Commentaireservice
   ],
   bootstrap: [AppComponent]
 })

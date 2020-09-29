@@ -1,3 +1,5 @@
 export class Commentaire{
-    constructor(public content:string){}
+    public id?:string
+    public content:string
+    constructor(){}
 }

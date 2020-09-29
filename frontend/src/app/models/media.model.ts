@@ -1,5 +1,7 @@
 export class Media{
-    constructor(public nom:string,
-                public type:string,
-                public lien:string){}
+    public id?:string
+    public nom:string
+    public type:string
+    public lien:string
+    constructor(){}
 }
