@@ -1,9 +1,7 @@
 import { User } from "../models/user.model";
-import { Subject} from "rxjs/Subject";
-import { HttpClient,HttpParams,HttpHeaders,HttpRequest} from '@angular/common/http';
-import{ Observable, throwError} from 'rxjs';
-import { catchError,retry} from 'rxjs/operators';
-import { Injectable} from'@angular/core';
+import { HttpClient,HttpHeaders} from '@angular/common/http';
+import { Injectable} from '@angular/core';
+import { urlApi } from '../config';
 
 @Injectable()
 
@@ -23,23 +21,23 @@ export class Userservice{
     }
 
     postUser(newUser: User){
-         return this.HttpClient.post<any>('http://localhost:3000/api/auth/signup/', newUser);
+         return this.HttpClient.post<any>( urlApi + '/auth/signup/', newUser);
     }
 
     loginUser(loginUser:User){
-        return this.HttpClient.post<any>('http://localhost:3000/api/auth/login/', loginUser);
+        return this.HttpClient.post<any>( urlApi + '/auth/login/', loginUser);
     }
 
     getUser(user){
-        return this.HttpClient.get<any>('http://localhost:3000/api/auth/users/' + user.id , { headers : this.headers});
+        return this.HttpClient.get<any>( urlApi + '/auth/users/' + user.id , { headers : this.headers});
     }
     
     putUser(user){
-        return this.HttpClient.put<any>('http://localhost:3000/api/auth/users/' + user.id, {"newPassword" : user.password }, { headers : this.headers});
+        return this.HttpClient.put<any>( urlApi + '/auth/users/' + user.id, {"newPassword" : user.password }, { headers : this.headers});
     }
 
     deleteUser(user){
-        return this.HttpClient.delete<any>('http://localhost:3000/api/auth/users/' + user.id , { headers : this.headers} );
+        return this.HttpClient.delete<any>( urlApi + '/auth/users/' + user.id , { headers : this.headers} );
     }
 
     //Fonction qui permet de sauvegarder les infos du user connecter (id,token) dans le local storage // 

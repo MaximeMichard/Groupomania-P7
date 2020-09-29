@@ -1,4 +1,5 @@
 const models= require ('../models');
+const fs = require ("fs");
 
 exports.createPost = async(req,res,next) => {
 
@@ -8,6 +9,7 @@ exports.createPost = async(req,res,next) => {
     title:req.body.title,
     content:req.body.content,
     attachment: req.body.attachment
+    /* attachment: `${req.protocol}://${req.get("host")}/images/${req.file.filename }` */ // Génération de l'URL -> http://localhost/images/nomdufichier //
   })
     return res.status(200).json (_postcreate);
   }
@@ -32,6 +34,17 @@ exports.getPost = async (req,res,next) => {
   }
 
 }
+
+exports.allPost = async (req,res,next) => {
+  try{
+    let _allPost = await models.post.findAll()
+    return res.status (200).json (_allPost);
+  }
+  catch(err){
+    return res.status(500).json (err); 
+  }
+}
+
 exports.getPostCommentaire= async (req,res,next)=> {
   try{
     let _get= await models.post.findOne({

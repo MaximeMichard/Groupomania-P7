@@ -6,6 +6,7 @@ import { Routes, RouterModule} from '@angular/router';
 
 import { AuthGuard} from './services/auth-guard.service';
 import { Userservice } from './services/user.service';
+import { Postservice } from './services/post.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -27,7 +28,6 @@ const appRoutes: Routes = [
   { path: 'auth/me',canActivate:[AuthGuard],component: MeComponent },
   { path: 'accueil',canActivate:[AuthGuard],component: AccueilComponent },
   { path: 'forum',canActivate:[AuthGuard],component: ForumComponent },
-  { path: 'forum/createPost',canActivate:[AuthGuard],component: CreatepostComponent},
   { path: 'not-found', component: ErrorSearchComponent },
   { path: '**', redirectTo: '/not-found' }
 ];
@@ -56,7 +56,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     AuthGuard,
-    Userservice
+    Userservice,
+    Postservice
   ],
   bootstrap: [AppComponent]
 })
