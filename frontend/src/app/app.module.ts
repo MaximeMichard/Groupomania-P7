@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListCommentaireComponent } from './forum/list-commentaire/list-commentaire.component';
 import { CommentaireComponent } from './forum/commentaire/commentaire.component';
 import { CreatepostComponent } from './forum/createpost/createpost.component';
+import { PostComponent } from './forum/post/post.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
     ListCommentaireComponent,
     CommentaireComponent,
     CreatepostComponent,
+    PostComponent,
   ],
   imports: [
     BrowserModule,

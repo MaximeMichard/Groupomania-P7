@@ -3,5 +3,6 @@ export class Post{
     public title:string ;
     public content:string ;
     public attachment: string ;
+    public createdAt: number;
     constructor(){}
 }

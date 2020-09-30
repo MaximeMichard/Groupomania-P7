@@ -10,18 +10,11 @@ import { Post } from '../models/post.model';
 })
 export class ForumComponent implements OnInit {
 
-  title:string;
-
-  posts: any[];
+  post: Post;
 
   constructor(private userService: Userservice,
-              private postService: Postservice) { }
+              private postService: Postservice) {}
 
   ngOnInit(): void {
-    this.postService.getPost()
-    .subscribe((response) =>{
-      console.log(response);
-    })
   }
-
 }
