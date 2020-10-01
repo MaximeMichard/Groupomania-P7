@@ -11,7 +11,7 @@ import { Post } from '../../models/post.model';
 export class PostComponent implements OnInit {
 
   post: Post;
-
+  posts: [];
   constructor(private userService: Userservice,
               private postService: Postservice) {
     this.post = new Post();
@@ -20,12 +20,7 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     this.postService.getPost()
     .subscribe((response) =>{
-      console.log(response);
-      this.post.title = response[0].title;
-      this.post.createdAt = response[0].createdAt;
-      this.post.id = response[0].userId;
-      this.post.content = response[0].content;
-      this.post.attachment= response [0].attachment;
+     this.posts = response;
     })
   }
 

@@ -2,22 +2,19 @@ const models= require ('../models');
 const fs = require ("fs");
 
 exports.createPost = async(req,res,next) => {
-
   try {
+    let post = JSON.parse(req.body.post);
     let _postcreate = await models.post.create({
-    UserId: req.userId,
-    title:req.body.title,
-    content:req.body.content,
-    attachment: req.body.attachment
-    /* attachment: `${req.protocol}://${req.get("host")}/images/${req.file.filename }` */ // Génération de l'URL -> http://localhost/images/nomdufichier //
+    UserId : req.userId,
+    ... post,
+    attachment : `${req.protocol}://${req.get("host")}/multimedia/${req.file.filename }`// Génération de l'URL -> http://localhost/images/nomdufichier //
   })
     return res.status(200).json (_postcreate);
   }
   catch(err){
-    console.log( err); 
+    console.log(err);
     return res.status(500).json ({ error: Error.message= 'Utilisateur existe pas!' });
   }
-   
 }
 
 exports.getPost = async (req,res,next) => {

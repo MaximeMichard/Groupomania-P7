@@ -21,7 +21,7 @@ require('./connection');
 
 app.use(helmet());
 app.use(bodyParser.json());
-app.use('/multimedia', express.static(path.join(__dirname, 'images'))); // Application utilise Image //
+app.use('/multimedia', express.static(path.join(__dirname, 'multimedia'))); // Application utilise Image //
 app.use('/api/post', postRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/api/commentaire', commentaireRoutes);

@@ -15,6 +15,7 @@ export class CreatepostComponent implements OnInit {
   error: boolean;
   post: Post;
   event: any;
+  fileToUpload: File = null;
 
   constructor(private postService: Postservice,
               private router : Router) {
@@ -25,8 +26,8 @@ export class CreatepostComponent implements OnInit {
   }
 
   onSubmit(form:NgForm){
-    if(this.post.title != null  && this.post.content && this.post.attachment != null){
-      this.postService.postMessage(this.post).subscribe(response =>{
+    if(this.post.title != null  && this.post.content  != null){
+      this.postService.postMessage(this.post, this.fileToUpload).subscribe(response =>{
         console.log(response)
       },error =>{
         console.log(error.error)
@@ -38,8 +39,8 @@ export class CreatepostComponent implements OnInit {
     }
   }
 
-  onFileSelected(event){
-    console.log(event);
+  onFileSelected(files){
+    this.fileToUpload = files[0];
   }
 
 }

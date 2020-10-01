@@ -1,20 +1,20 @@
-<div class="card">
+<div class="card" *ngFor="let post of posts">
     <div class="card-header d-flex">
       <div class="col-lg-6">
-        <h3>{{ this.post.id }}</h3>
+        <h3>{{ post.id }}</h3>
       </div>
       <div class="col-lg-6 text-right">
-        <p>{{ this.post.createdAt }} </p>
+        <p>{{ post.createdAt }} </p>
       </div>
     </div>
     <div class="card-body">
-      <h5 class="card-title text-center py-5">{{ this.post.title }}</h5>
+      <h5 class="card-title text-center py-5">{{ post.title }}</h5>
       <div class="d-flex">
         <div class="col-lg-6">
-          <p class="card-text py-2">{{ this.post.content }}</p>
+          <p class="card-text py-2">{{ post.content }}</p>
         </div>
         <div class="col-lg-6 text-center">
-          <img class="card-img-bottom" src="..." alt="Card image cap"> {{ this.post.attachment }}
+          <img class="card-img-bottom" src="{{ this.post.attachment }}" alt="Card image cap"> 
         </div>
       </div>
       <button class="btn btn-primary m-3 "type="button" data-toggle="collapse" data-target="#content">Commentaire</button>
