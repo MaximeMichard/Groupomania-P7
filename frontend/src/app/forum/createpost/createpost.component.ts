@@ -28,9 +28,10 @@ export class CreatepostComponent implements OnInit {
   onSubmit(form:NgForm){
     if(this.post.title != null  && this.post.content  != null){
       this.postService.postMessage(this.post, this.fileToUpload).subscribe(response =>{
-        console.log(response)
+        this.router.navigate(['/forum']);
+        this.error = false ;
+        console.log(response);
       },error =>{
-        console.log(error.error)
         this.error= true;
       })
     }

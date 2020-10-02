@@ -10,6 +10,7 @@ export class Postservice{
 
     headers : HttpHeaders;
     token: string;
+    userId: number;
 
      constructor(private HttpClient: HttpClient,
                 private userService: Userservice){
@@ -27,15 +28,16 @@ export class Postservice{
         const formData = new FormData();
         formData.append('post', JSON.stringify(newPost));
         formData.append('file', file);
-        formData.forEach(function(element){
-            console.log(element);
-          });
         this.headers = new HttpHeaders({'Authorization': `Token ${this.token}` }) ; 
         return this.HttpClient.post<any>( urlApi + '/post/',  formData, { headers : this.headers } );
     }
 
     getPost(){
         return this.HttpClient.get<any>(urlApi + '/post/',{ headers : this.headers})
+    }
+
+    deletePost(post){
+        return this.HttpClient.delete<any> (urlApi + '/post' + post.id, {headers : this.headers })
     }
 
 }
