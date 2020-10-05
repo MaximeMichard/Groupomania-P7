@@ -1,10 +1,10 @@
 <button type="button" class="btn btn-dark mr-5" data-toggle="modal" data-target="#createPost">Publier votre Post</button>
 
-<div class="modal fade" id="createPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="createPost" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Poster votre message</h5>
+        <h5 class="modal-title">Poster votre message</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -12,13 +12,13 @@
       <div class="modal-body">
         <form (ngSubmit)="onSubmit(f)" #f="ngForm">
           <div class="form-group py-2" >
-            <label for="text" >Titre</label>
+            <label for="text">Titre</label>
             <input type="text" class="form-control" id="title" name="title" [(ngModel)]="post.title">
           </div>
           <div class="form-group py-2">
               <label>Message</label>
               <textarea class="form-control" rows="5" name="content" [(ngModel)]="post.content"></textarea>
-            </div>
+          </div>
           <div class="d-flex justify-content-around py-2">
               <input class="btn btn-secondary" type="file" (change)="onFileSelected($event.target.files)" name="attachment">
               <button type="submit" class="btn btn-primary">Publier</button>

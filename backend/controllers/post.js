@@ -29,7 +29,7 @@ exports.getPost = async (req,res,next) => {
   catch (err) {
     return res.status(500).json ( err); 
   }
-
+  
 }
 
 exports.allPost = async (req,res,next) => {
@@ -59,21 +59,21 @@ exports.getPostCommentaire= async (req,res,next)=> {
 }
 
  exports.updatePost = async (req,res,next) => {
-  const newTitle = req.body.newTitle;
-  const newContent= req.body.newContent;
-  const newAttachment= req.body.newAttachment;
-
   try {
-    await models.post.update({ 
-      title: newTitle, 
-      content: newContent,
-      attachment:newAttachment 
-    },{where: {id: Number(req.params.id)}});
+    const post = req.file ?{
+      ...JSON.parse(req.body.post),
+      attachment : `${req.protocol}://${req.get("host")}/multimedia/${req.file.filename }`,
+    }:
+    {
+      ...req.body
+    };
+    console.log(post);
+    let _updatepost= await models.post.update({
+      ...post  
+    },
+    {where: {id: Number(req.params.id)}});
 
-    let _postget= await models.post.findOne({
-      where: { id: Number(req.params.id) } 
-      });
-      return res.status(200).json( _postget);
+    return res.status(200).json(_updatepost);
   }
 
   catch(err){
@@ -81,16 +81,23 @@ exports.getPostCommentaire= async (req,res,next)=> {
   } 
 }
   
-exports.deletePost = async (req,res,next) => {  
-  try {
-    let _postdelete= await models.post.destroy({
+exports.deletePost = (req,res,next) => {  
+  models.post.findOne({ // On cherche l'URL de l'image //
+  where: {id: Number(req.params.id)}
+})
+.then(post => {
+  const filename = post.attachment.split("/multimedia/")[1]; // On récupère le fichier //
+  fs.unlink(`multimedia/${filename}`, () => { // POur effacer le fichier (unlink)//
+    models.post.destroy({ // Supprimer le fichier de la BDD//
       where: {id: Number(req.params.id)}
-    });
-    return res.status(200).json({_postdelete}); 
-  }
-  catch(err){
-    console.log(err);
-    return res.status(500).json ({err});
-  }
-}  
+      })
+      .then(() => res.status(200).json({
+        message: "Post Supprimé !"
+      }))
+      .catch((error) => res.status(400).json({
+        error
+      }));
+  });
+})
+} 
 

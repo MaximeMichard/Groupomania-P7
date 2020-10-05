@@ -28,11 +28,17 @@ export class CreatepostComponent implements OnInit {
   onSubmit(form:NgForm){
     if(this.post.title != null  && this.post.content  != null){
       this.postService.postMessage(this.post, this.fileToUpload).subscribe(response =>{
-        this.router.navigate(['/forum']);
+        if(this.router.url.startsWith("/forum") == true){
+          location.reload();
+        }
+        else{
+          this.router.navigate(['/forum']);
+        }        
         this.error = false ;
         console.log(response);
-      },error =>{
+      },(error) =>{
         this.error= true;
+        return error;
       })
     }
     else{

@@ -23,13 +23,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListCommentaireComponent } from './forum/list-commentaire/list-commentaire.component';
 import { CommentaireComponent } from './forum/commentaire/commentaire.component';
 import { CreatepostComponent } from './forum/createpost/createpost.component';
+import { UpdatePostComponent } from './forum/update-post/update-post.component';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/signin', component: SigninComponent },
   { path: 'auth/me',canActivate:[AuthGuard],component: MeComponent },
   { path: 'accueil',canActivate:[AuthGuard],component: AccueilComponent },
-  { path: 'forum',canActivate:[AuthGuard],component: ForumComponent },
+  { path: 'forum', canActivate : [AuthGuard] , component : ForumComponent },
+  { path: 'forum/update/:id', canActivate:[AuthGuard] , component : UpdatePostComponent},
+  { path : 'forum/commentaire/:id',canActivate:[AuthGuard], component : ListCommentaireComponent},
   { path: 'not-found', component: ErrorSearchComponent },
   { path: '**', redirectTo: '/not-found' }
 ];
@@ -48,6 +53,7 @@ const appRoutes: Routes = [
     ListCommentaireComponent,
     CommentaireComponent,
     CreatepostComponent,
+    UpdatePostComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +61,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    NgbModule,
   ],
   providers: [
     AuthGuard,
