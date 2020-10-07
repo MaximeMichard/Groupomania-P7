@@ -27,6 +27,7 @@ import { UpdatePostComponent } from './forum/update-post/update-post.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/signin', component: SigninComponent },
@@ -61,7 +62,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule,
+    NgbModule,  
   ],
   providers: [
     AuthGuard,

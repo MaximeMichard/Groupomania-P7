@@ -4,17 +4,16 @@ import { Postservice } from '../services/post.service';
 import { Post } from '../models/post.model';
 import { Router } from '@angular/router';
 import { Alert } from '../models/alert.model';
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
-const ALERTS: Alert[] = [{
+/* const ALERTS: Alert[] = [{
   type: 'success',
   message: 'Post Supprimé',
 },{
   type: 'danger',
   message: 'This is a danger alert',
 }
-];
+]; */
 
 @Component({
   selector: 'app-forum',
@@ -32,17 +31,16 @@ export class ForumComponent implements OnInit {
   constructor(private userService: Userservice,
               private postService: Postservice,
               private router: Router) {
-    this.reset();
+    /* this.reset(); */
     this.post = new Post();
    }
 
   ngOnInit(): void {
     this.postService.getPost()
     .subscribe((response) =>{
-    console.log(response);
      this.posts = response;   
     },(err)=>{
-      console.log(err)
+      return err; 
     })
     this.userId= this.userService.getSavedUser().userId;
   }
@@ -50,7 +48,11 @@ export class ForumComponent implements OnInit {
   deletePost(_post){
     this.postService.deletePost(_post)
     .subscribe((response)=>{
-      this.delete = false ;
+      Swal.fire(
+        'Supprimé!',
+        'Post Supprimé !',
+        'success'
+      )
       setTimeout(function(){
         location.reload(); 
       },3000);
@@ -60,11 +62,11 @@ export class ForumComponent implements OnInit {
     })
   }
 
-  close(alert: Alert) {
+  /* close(alert: Alert) {
     this.alerts.splice(this.alerts.indexOf(alert), 1);
   }
   reset() {
     this.alerts = Array.from(ALERTS);
-  }
+  } */
 
 }

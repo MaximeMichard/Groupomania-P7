@@ -5,6 +5,9 @@ import { User} from '../../models/user.model';
 import { Observable} from 'rxjs';
 import { Router } from '@angular/router';
 
+import Swal from 'sweetalert2';
+
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -26,8 +29,10 @@ export class SignupComponent implements OnInit {
     if(this.user.email.length > 0 && this.user.password.length > 0 &&  this.user.username.length > 0){
       this.Userservice.postUser(this.user).subscribe(response =>{
         if(response.userId != null){
-          this.error = false ; 
+          this.error = false ;
+          Swal.fire('Test'); 
           setTimeout(()=>{
+            
             this.router.navigate(['auth/signin']);
           },3000);
         }

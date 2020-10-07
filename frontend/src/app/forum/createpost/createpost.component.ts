@@ -4,6 +4,7 @@ import { Post } from '../../models/post.model';
 import { HttpClient} from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Router } from "@angular/router";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-createpost',
@@ -28,16 +29,22 @@ export class CreatepostComponent implements OnInit {
   onSubmit(form:NgForm){
     if(this.post.title != null  && this.post.content  != null){
       this.postService.postMessage(this.post, this.fileToUpload).subscribe(response =>{
+        Swal.fire({
+          title: 'Post supprimé !',
+          text: 'Vous allez être redigérer !',
+          icon: 'success',
+          timer: 3000
+        });
+       setTimeout(()=>{
         if(this.router.url.startsWith("/forum") == true){
           location.reload();
         }
         else{
           this.router.navigate(['/forum']);
-        }        
-        this.error = false ;
-        console.log(response);
+        }
+       },3000);        
       },(error) =>{
-        this.error= true;
+        Swal.fire('Error !', 'Un problème est survenu lors de votre requête ! ', 'error');
         return error;
       })
     }

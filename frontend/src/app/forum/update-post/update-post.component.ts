@@ -5,6 +5,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Userservice } from '../../services/user.service';
 import { NgForm } from '@angular/forms';
 
+import  Swal  from 'sweetalert2';
+
 @Component({
   selector: 'app-update-post',
   templateUrl: './update-post.component.html',
@@ -49,7 +51,12 @@ export class UpdatePostComponent implements OnInit {
     if(this.post.title != null  && this.post.content != null){
       this.postService.updatePost(this.post,this.fileToUpload).subscribe(response =>{
         if(response != null){
-            this.router.navigate(['/forum']);
+          Swal.fire(
+            'Modifié!',
+            'Post Modifié !',
+            'success'
+          )
+          setTimeout(this.navigateForum.bind(this),3000);      
         }
         else{
           this.error= true;
@@ -66,6 +73,10 @@ export class UpdatePostComponent implements OnInit {
 
   onFileSelected(files){
     this.fileToUpload = files[0];
+  }
+
+  navigateForum(){
+    this.router.navigate(['/forum']);
   }
 
 }
