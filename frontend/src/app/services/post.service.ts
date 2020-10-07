@@ -51,16 +51,4 @@ export class Postservice{
         this.headers = new HttpHeaders({'Authorization': `Token ${this.token}` }); 
         return this.HttpClient.put<any>(urlApi + '/post/' + newPost.id, formData, { headers: this.headers});
     }
-
-    /* if(typeof file === 'string'){
-        this.headers = new HttpHeaders({'Authorization': `Token ${this.token}` });
-        return this.HttpClient.put<any> (urlApi + '/post/' + newPost.id, newPost, { headers:this.headers});
-    }
-    else{
-        const formData = new FormData();
-        formData.append('newPost',JSON.stringify(newPost));
-        formData.append('file', file);
-        this.headers = new HttpHeaders({'Authorization': `Token ${this.token}` }); 
-        return this.HttpClient.put<any>(urlApi + '/post/' + newPost.id, formData, { headers: this.headers});
-    } */
 }

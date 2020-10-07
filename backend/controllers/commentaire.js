@@ -1,6 +1,7 @@
 const models= require('../models');
 
 exports.createCommentaire = async (req,res,next) => {
+    console.log(req.body);
     try{
         let _commentairecreate= await models.commentaire.create({
             UserId: req.userId,

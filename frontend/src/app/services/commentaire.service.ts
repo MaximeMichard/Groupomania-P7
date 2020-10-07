@@ -24,4 +24,8 @@ export class Commentaireservice{
     getCommentaire(){
         return this.HttpClient.get<any> (urlApi + /* post.id, */ '/commentaire', {headers: this.headers});
     }
+
+    postCommentaire(newCommentaire: Commentaire){
+        return this.HttpClient.post<any>( urlApi + '/commentaire/', newCommentaire, {headers: this.headers})
+    }
 }

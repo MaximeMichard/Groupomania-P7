@@ -3,3 +3,11 @@ img{
     height: 5rem;
     margin-right: 15px;
 }
+header{
+    width: 100%;
+}
+@media (max-width: 425px){
+    .navbar{
+        width: 103%;
+    }
+}

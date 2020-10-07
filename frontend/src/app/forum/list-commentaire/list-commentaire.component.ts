@@ -30,6 +30,7 @@ export class ListCommentaireComponent implements OnInit {
         this.userId= this.userService.getSavedUser().userId;
         if(this.userId != response.userId){
           this.router.navigate(['/forum']);
+          console.log(response); 
         }
         else{
           this.commentaire = response;
