@@ -1,16 +1,19 @@
-<div class="container" id="content">
+<div class="container" id="content" *ngFor= "let commentaire of commentaires">
     <div class="card mt-3">
       <div class="card-header d-flex">
         <div class="col-lg-6 text-center">
-          <h3>Nom d'utilisateur</h3>
+          <h3>{{ commentaire.userId }}</h3>
         </div>
         <div class="col-lg-6 text-center ">
-          <p>Date de création du commentaire</p>
+          <p>{{ commentaire.createdAt | date:'medium' }}</p>
         </div>
       </div>
       <div class="card-body">
-        <p class="text-center">Contenu du commentaire</p>
+        <p class="text-center">{{ commentaire.content }}</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-danger" *ngIf=" userId == commentaire.userId " (click) = "deleteCommentaire(c)">Supprimer</button>
       </div>
     </div>
-    <app-commentaire></app-commentaire>
   </div>
+  <app-commentaire></app-commentaire>

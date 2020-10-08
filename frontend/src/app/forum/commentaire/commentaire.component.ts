@@ -25,11 +25,10 @@ export class CommentaireComponent implements OnInit {
               }
 
   ngOnInit(): void {
+    this.commentaire.postId = this.route.snapshot.paramMap.get('id');
   }
 
   onSubmit(form:NgForm){
-    this.commentaire.postId = this.route.snapshot.paramMap.get('id');
-    console.log(this.commentaire.postId);
     this.commentaireService.postCommentaire(this.commentaire).subscribe(response =>{
         console.log(response);
       },(error) =>{ 

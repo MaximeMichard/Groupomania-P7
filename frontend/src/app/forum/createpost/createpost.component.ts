@@ -30,7 +30,7 @@ export class CreatepostComponent implements OnInit {
     if(this.post.title != null  && this.post.content  != null){
       this.postService.postMessage(this.post, this.fileToUpload).subscribe(response =>{
         Swal.fire({
-          title: 'Post supprimé !',
+          title: 'Post créer !',
           text: 'Vous allez être redigérer !',
           icon: 'success',
           timer: 3000

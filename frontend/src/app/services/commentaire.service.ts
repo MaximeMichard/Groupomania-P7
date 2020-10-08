@@ -21,11 +21,15 @@ export class Commentaireservice{
         }
     }
 
-    getCommentaire(){
-        return this.HttpClient.get<any> (urlApi + /* post.id, */ '/commentaire', {headers: this.headers});
+    getCommentaire(idPost){
+        return this.HttpClient.get<any> (urlApi + '/post/' + idPost + '/commentaire', {headers: this.headers});
     }
 
     postCommentaire(newCommentaire: Commentaire){
         return this.HttpClient.post<any>( urlApi + '/commentaire/', newCommentaire, {headers: this.headers})
+    }
+
+    deleteCommentaire ( idCommentaire ) {
+        return this.HttpClient.delete<any> ( urlApi + '/commentaire/' + idCommentaire, {headers: this.headers});
     }
 }

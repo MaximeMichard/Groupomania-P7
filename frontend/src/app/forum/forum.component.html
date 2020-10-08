@@ -5,7 +5,7 @@
           <h3>{{ post.userId }}</h3>
         </div>
         <div class="col-lg-6 text-right">
-          <p>{{ post.createdAt }} </p>
+          <p>{{ post.createdAt | date:'medium' }} </p>
         </div>
       </div>
       <div class="card-body">

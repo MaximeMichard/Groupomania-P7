@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Commentaire } from '../../models/commentaire.model';
 import { Postservice } from '../../services/post.service';
 import { Userservice } from '../../services/user.service';
+import { Commentaireservice } from '../../services/commentaire.service';
 import { Router,ActivatedRoute,ParamMap } from '@angular/router';
 
 @Component({
@@ -12,35 +13,42 @@ import { Router,ActivatedRoute,ParamMap } from '@angular/router';
 export class ListCommentaireComponent implements OnInit {
 
   userId: number;
+  commentaires: [] ;
+
 
   commentaire: Commentaire;
 
   constructor(private userService : Userservice,
               private postService : Postservice,
+              private commentaireService : Commentaireservice,
               private router: Router,
               private route : ActivatedRoute) {
-                /* this.commentaire = new Commentaire(); */
+                this.userId = this.userService.getSavedUser().userId;
                }
 
+  
+
   ngOnInit(): void {
-    const commentaireId= this.route.snapshot.paramMap.get('id');
-    this.postService.getOnePost(commentaireId)
+
+    const postId = this.route.snapshot.paramMap.get('id');
+
+    this.commentaireService.getCommentaire(postId)
     .subscribe((response)=>{
-      if (response != null){
-        this.userId= this.userService.getSavedUser().userId;
-        if(this.userId != response.userId){
-          this.router.navigate(['/forum']);
-          console.log(response); 
-        }
-        else{
-          this.commentaire = response;
-        }
-      }
-      else{
-        this.router.navigate(['/forum']);
-      }
-    },(err)=>{
+      this.commentaires = response.commentaires;
+      console.log(response);
+     },(err)=>{
       console.log(err);
+    })
+  }
+
+  deleteCommentaire(commentaire){
+    
+    this.commentaireService.deleteCommentaire(commentaire.id)
+    .subscribe((response)=>{
+      console.log(response);
+      
+    },(error)=>{
+      console.log(error);
     })
   }
 

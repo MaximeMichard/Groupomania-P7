@@ -106,6 +106,7 @@ exports.getUserProfile = async (req,res,next) => {
         return res.status(404).json({ err});
     }
 }
+
 exports.updatePwd= (req,res,next) => {
   const newPassword = req.body.newPassword;
   if (schema.validate(newPassword)) {
