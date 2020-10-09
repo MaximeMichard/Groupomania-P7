@@ -51,11 +51,12 @@ export class UpdatePostComponent implements OnInit {
     if(this.post.title != null  && this.post.content != null){
       this.postService.updatePost(this.post,this.fileToUpload).subscribe(response =>{
         if(response != null){
-          Swal.fire(
-            'Modifié!',
-            'Post Modifié !',
-            'success'
-          )
+          Swal.fire({
+            title:'Modifié!',
+            text:'Post Modifié !',
+            icon:'success',
+            timer: 2000
+          })
           setTimeout(this.navigateForum.bind(this),3000);      
         }
         else{

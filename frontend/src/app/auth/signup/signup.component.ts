@@ -29,23 +29,41 @@ export class SignupComponent implements OnInit {
     if(this.user.email.length > 0 && this.user.password.length > 0 &&  this.user.username.length > 0){
       this.Userservice.postUser(this.user).subscribe(response =>{
         if(response.userId != null){
-          this.error = false ;
-          Swal.fire('Test'); 
+          Swal.fire({
+            title:'Whaouuu !',
+            text:'Création de compte OK !',
+            icon:'success',
+            timer: 2000
+          }) 
           setTimeout(()=>{
-            
             this.router.navigate(['auth/signin']);
           },3000);
         }
         else{
+          Swal.fire({
+            title:'Ouppss...',
+            text:'Problème identification',
+            icon:'error',
+            timer: 3000
+          })
           this.error= true;
         }
       },error =>{
-        console.log(error.error)
-        this.error= true;
+        Swal.fire({
+          title:'Ouppss...',
+          text:'Email déjà existant ou mot de passe incorrect',
+          icon:'error',
+          timer: 3000
+        })
       })
     }
     else{
-      this.error= true;
+      Swal.fire({
+        title:'Ouppss...',
+        text:'Paramètres incorrect',
+        icon:'error',
+        timer: 3000
+      })
     }
   }
 }

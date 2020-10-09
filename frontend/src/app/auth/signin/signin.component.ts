@@ -33,7 +33,8 @@ export class SigninComponent implements OnInit {
             Swal.fire({
               title:'Youpiiii !',
               text:'Authentification réussi',
-              icon:'success'
+              icon:'success',
+              timer: 2000
             })
             setTimeout(()=>{
               this.router.navigate(['/forum']);

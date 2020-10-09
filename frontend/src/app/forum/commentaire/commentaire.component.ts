@@ -6,6 +6,8 @@ import { Commentaireservice } from '../../services/commentaire.service';
 import { Router,ActivatedRoute,ParamMap } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-commentaire',
   templateUrl: './commentaire.component.html',
@@ -30,9 +32,22 @@ export class CommentaireComponent implements OnInit {
 
   onSubmit(form:NgForm){
     this.commentaireService.postCommentaire(this.commentaire).subscribe(response =>{
-        console.log(response);
+      Swal.fire({
+        title:'Ouii !',
+        text: 'Commentaire ajouter',
+        icon: 'success',
+        timer: 3000
+      })
+      setTimeout(()=>
+      location.reload()
+      ,3000)
+        
       },(error) =>{ 
-        console.log(error);
+        Swal.fire({
+          title:'Ouppsss..',
+          text:'Error ...' + error ,
+          icon:'error'
+        })
       })
     }
 

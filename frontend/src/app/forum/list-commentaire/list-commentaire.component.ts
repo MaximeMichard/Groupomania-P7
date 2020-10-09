@@ -5,6 +5,8 @@ import { Userservice } from '../../services/user.service';
 import { Commentaireservice } from '../../services/commentaire.service';
 import { Router,ActivatedRoute,ParamMap } from '@angular/router';
 
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-list-commentaire',
   templateUrl: './list-commentaire.component.html',
@@ -35,7 +37,6 @@ export class ListCommentaireComponent implements OnInit {
     this.commentaireService.getCommentaire(postId)
     .subscribe((response)=>{
       this.commentaires = response.commentaires;
-      console.log(response);
      },(err)=>{
       console.log(err);
     })
@@ -45,10 +46,19 @@ export class ListCommentaireComponent implements OnInit {
     
     this.commentaireService.deleteCommentaire(commentaire.id)
     .subscribe((response)=>{
-      console.log(response);
+      Swal.fire({
+        title:'Commentaire supprimé !',
+        icon:'warning'
+      })
+      setTimeout(()=>
+      location.reload()
+      ,3000)
       
     },(error)=>{
-      console.log(error);
+      Swal.fire({
+        title:'Suppression impossible !' + error ,
+        icon:'warning'
+      })
     })
   }
 
