@@ -2,6 +2,7 @@ const models= require ('../models');
 const fs = require ("fs");
 
 exports.createPost = async(req,res,next) => {
+  console.log("userId :" + req.userId);
   try {
     let post = JSON.parse(req.body.post);
     let _postcreate = await models.post.create({
@@ -34,10 +35,23 @@ exports.getPost = async (req,res,next) => {
 
 exports.allPost = async (req,res,next) => {
   try{
-    let _allPost = await models.post.findAll()
+    let _allPost = await models.post.findAll({
+      raw : true,
+      nest : true,
+    })
+    for (let index = 0; index < _allPost.length; index++) {
+      let element = _allPost[index];  
+      let _user= await models.User.findOne({
+        where: { id: Number(element.userId) },
+        attributes:{ exclude: ['password']} 
+    });
+    element.user = _user;
+    _allPost[index] = element ;
+    }
     return res.status (200).json (_allPost);
   }
   catch(err){
+    console.log(err);
     return res.status(500).json (err); 
   }
 }

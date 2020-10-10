@@ -13,7 +13,7 @@
       </div>
       <div class="card-footer">
         <button class="btn btn-default">
-          <i class="fas fa-trash-alt fa-lg" *ngIf=" userId == commentaire.userId " (click) = "deleteCommentaire(commentaire)"></i>
+          <i class="fas fa-trash-alt fa-lg" *ngIf=" userId == commentaire.userId || this.user.isAdmin == true" (click) = "deleteCommentaire(commentaire)"></i>
         </button>
       </div>
     </div>

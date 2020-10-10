@@ -28,6 +28,7 @@ export class SigninComponent implements OnInit {
   onSubmit(form:NgForm){
     if(this.user.email != null  && this.user.password != null){
       this.userservice.loginUser(this.user).subscribe(response =>{
+        console.log(response);
         if(response.userId != null){
             this.userservice.saveUser(response);
             Swal.fire({

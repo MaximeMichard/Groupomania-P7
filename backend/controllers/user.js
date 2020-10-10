@@ -80,7 +80,9 @@ exports.login = (req, res, next) => {
                             userId: user.id,
                             token: jwt.sign({userId: user.id},"BONJOUR1234",{
                                 expiresIn:"24h",
-                            })
+                            }
+                            ),
+                            isAdmin : user.isAdmin
                         })
                     } else {
                         res.status(403).json({ error: 'invalid password' });
@@ -97,7 +99,7 @@ exports.getUserProfile = async (req,res,next) => {
     try{
         let _userget= await models.User.findOne({
             where: { id: Number(req.params.id) },
-            attributes:{ exclude: ['password','isAdmin']} 
+            attributes:{ exclude: ['password']} 
         })
         return res.status(200).json( _userget);
         

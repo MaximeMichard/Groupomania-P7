@@ -4,6 +4,7 @@ import { Postservice } from '../../services/post.service';
 import { Userservice } from '../../services/user.service';
 import { Commentaireservice } from '../../services/commentaire.service';
 import { Router,ActivatedRoute,ParamMap } from '@angular/router';
+import { User } from '../../models/user.model'
 
 import Swal from 'sweetalert2';
 
@@ -16,16 +17,21 @@ export class ListCommentaireComponent implements OnInit {
 
   userId: number;
   commentaires: [] ;
+  user: User;
 
 
   commentaire: Commentaire;
 
   constructor(private userService : Userservice,
-              private postService : Postservice,
               private commentaireService : Commentaireservice,
               private router: Router,
               private route : ActivatedRoute) {
+
+                this.user = new User();
+
                 this.userId = this.userService.getSavedUser().userId;
+                this.user.isAdmin = this.userService.getSavedUser().isAdmin;
+                
                }
 
   
