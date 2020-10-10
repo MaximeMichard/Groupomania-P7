@@ -56,7 +56,7 @@ export class ListCommentaireComponent implements OnInit {
       
     },(error)=>{
       Swal.fire({
-        title:'Suppression impossible !' + error ,
+        title:'Suppression impossible !' + JSON.parse (error) ,
         icon:'warning'
       })
     })
