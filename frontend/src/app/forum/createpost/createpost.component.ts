@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Postservice } from '../../services/post.service';
 import { Post } from '../../models/post.model';
-import { HttpClient} from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Router } from "@angular/router";
 import Swal from 'sweetalert2';

@@ -25,7 +25,7 @@ import { CommentaireComponent } from './forum/commentaire/commentaire.component'
 import { CreatepostComponent } from './forum/createpost/createpost.component';
 import { UpdatePostComponent } from './forum/update-post/update-post.component';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 const appRoutes: Routes = [
@@ -62,7 +62,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule,  
+     
   ],
   providers: [
     AuthGuard,

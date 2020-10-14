@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm,FormsModule,FormControl,FormGroup,Validators} from '@angular/forms';
 import { Userservice} from '../../services/user.service';
 import { User} from '../../models/user.model';
-import { Observable} from 'rxjs';
 import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
