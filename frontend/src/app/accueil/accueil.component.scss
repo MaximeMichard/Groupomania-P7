@@ -7,6 +7,23 @@ section{
 img{
     padding:2rem 0rem;
 }
+.name{
+    animation: text 3s 1;
+    font-size: 50px;
+}
+@keyframes text {
+    0%{
+        color: red;
+        transform: scale(0.5)
+    }
+    50%{
+        color: purple;
+    }
+    100%{
+        color:green;
+        transform: scale(1)
+    }
+}
 @media(max-width: 430px){
     section{
         display: flex;
