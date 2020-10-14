@@ -45,12 +45,9 @@ export class CommentaireComponent implements OnInit {
       },(error) =>{ 
         Swal.fire({
           title:'Ouppsss..',
-          text:'Error ...' + error ,
+          text:'Error ...',
           icon:'error'
         })
       })
     }
-
- 
-
 }

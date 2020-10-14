@@ -58,13 +58,30 @@ exports.allPost = async (req,res,next) => {
 
 exports.getPostCommentaire= async (req,res,next)=> {
   try{
-    let _get= await models.post.findOne({
+    let _postwithComment= await models.post.findOne({
       where: { id: Number(req.params.id)},
       include: [{
         model: models.commentaire,
-      }]
-    })
-    return res.status (200).json (_get); 
+        
+      }],
+     
+    }) 
+    for (let index = 0; index < _postwithComment.commentaires.length ; index++) {
+      let element = _postwithComment.commentaires[index]; 
+      console.log(element); 
+      let _user= await models.User.findOne({
+        where: { id: Number(element.UserId) },
+        attributes:{ exclude: ['password']} 
+    });
+    element.user = _user;
+    _postwithComment.commentaires[index] = element ;
+    console.log(_user);
+    }
+    
+    
+    return res.status (200).json (_postwithComment);
+       
+     
   }
   catch(err){
     console.log(err);

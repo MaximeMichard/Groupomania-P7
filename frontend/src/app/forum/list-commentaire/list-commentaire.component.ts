@@ -43,6 +43,7 @@ export class ListCommentaireComponent implements OnInit {
     this.commentaireService.getCommentaire(postId)
     .subscribe((response)=>{
       this.commentaires = response.commentaires;
+      console.log(response);
      },(err)=>{
       console.log(err);
     })
