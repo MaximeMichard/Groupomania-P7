@@ -1,7 +1,10 @@
-@media (max-width : 425px){
+@media (max-width : 430px){
     app-rout{
     display: flex;
     justify-content: center;
     align-items: center;
+    }
+    .row{
+        margin-left: 10px
     }
 }

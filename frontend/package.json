@@ -1,9 +1,10 @@
 {
   "name": "frontend",
   "version": "0.0.0",
+  "main": "server.js",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -21,6 +22,9 @@
     "@angular/platform-browser-dynamic": "~10.0.9",
     "@angular/router": "~10.0.9",
     "bootstrap": "^4.5.2",
+    "compression": "^1.7.4",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
     "rxjs": "~6.5.5",
     "sweetalert2": "^10.3.5",
     "tslib": "^2.0.0",

@@ -1,1 +1,1 @@
-export const urlApi = "http://localhost:3000/api"; /* https://app-groupomania.herokuapp.com */
+export const urlApi = "http://localhost:3000/api";  /* https://app-groupomania.herokuapp.com/api*/

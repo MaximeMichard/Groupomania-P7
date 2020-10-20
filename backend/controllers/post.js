@@ -1,8 +1,9 @@
 const models= require ('../models');
 const fs = require ("fs");
+const QueryTypes = require ("sequelize"); 
 
-exports.createPost = async(req,res,next) => {
-  console.log("userId :" + req.userId);
+exports.createPost = async (req,res,next) => {
+
   try {
     let post = JSON.parse(req.body.post);
     let _postcreate = await models.post.create({
@@ -60,28 +61,25 @@ exports.getPostCommentaire= async (req,res,next)=> {
   try{
     let _postwithComment= await models.post.findOne({
       where: { id: Number(req.params.id)},
-      include: [{
-        model: models.commentaire,
-        
-      }],
-     
-    }) 
-    for (let index = 0; index < _postwithComment.commentaires.length ; index++) {
+      include: models.commentaire,
+    });
+
+    _postwithComment = _postwithComment.toJSON();
+
+     for (let index = 0; index < _postwithComment.commentaires.length ; index++) {
       let element = _postwithComment.commentaires[index]; 
-      console.log(element); 
       let _user= await models.User.findOne({
-        where: { id: Number(element.UserId) },
+        where: { id: Number(element.userId) },
         attributes:{ exclude: ['password']} 
     });
+
     element.user = _user;
     _postwithComment.commentaires[index] = element ;
-    console.log(_user);
+
     }
     
-    
     return res.status (200).json (_postwithComment);
-       
-     
+ 
   }
   catch(err){
     console.log(err);

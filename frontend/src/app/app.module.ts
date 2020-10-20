@@ -25,9 +25,6 @@ import { CommentaireComponent } from './forum/commentaire/commentaire.component'
 import { CreatepostComponent } from './forum/createpost/createpost.component';
 import { UpdatePostComponent } from './forum/update-post/update-post.component';
 
-
-
-
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/signin', component: SigninComponent },

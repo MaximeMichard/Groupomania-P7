@@ -14,14 +14,17 @@ img{
 @keyframes text {
     0%{
         color: red;
-        transform: scale(0.5)
+        transform: scale(0.5);
+        opacity: 0;
     }
     50%{
         color: purple;
+        opacity: 0.5;
     }
     100%{
         color:green;
-        transform: scale(1)
+        transform: scale(1);
+        opacity: 1;
     }
 }
 @media(max-width: 430px){

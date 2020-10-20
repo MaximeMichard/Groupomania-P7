@@ -3,7 +3,7 @@ const router= express.Router();
 
 const ctrlCommentaire= require ('../controllers/commentaire');
 const auth= require ('../middleware/auth');
-const multer= require ('../middleware/multer-config');
+
 
 router.post ("/",auth,ctrlCommentaire.createCommentaire);
 router.get ("/:id",auth,ctrlCommentaire.getCommentaire);
