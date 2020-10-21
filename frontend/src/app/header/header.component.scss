@@ -7,6 +7,12 @@ img{
 @media (max-width: 710px){
     .navbar{
         width: 105%;
+        text-align: center;
+    }
+}
+@media (max-width : 769px){
+    img{
+        display : none ; 
     }
 }
 li{
@@ -14,7 +20,7 @@ li{
     margin:0px 20px;
 }
 
-a::after {
+li::after {
     content: "";
     display: block;
     position: absolute;
@@ -25,6 +31,6 @@ a::after {
     transition: transform 0.2s ease-in-out;
 }
 
-a:hover::after{
+li:hover::after{
     transform: scale(1);
 }

@@ -4,8 +4,24 @@ section{
     justify-content: center;
     align-items: center;
 }
+h2{
+    font-family: 'Indie Flower', cursive;
+}
 img{
     padding:2rem 0rem;
+}
+.baniere{
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px #1c1a19;
+}
+.baniere_description{
+    position: absolute;
+    bottom : 0 ; 
+    color:#fff;
+    background-color: rgba(24,24,24,0.8);
+    border-radius: 0px 0px 5px 5px;
+    
 }
 .name{
     animation: text 3s 1;
@@ -13,17 +29,19 @@ img{
 }
 @keyframes text {
     0%{
-        color: red;
+        color: rgb(206, 70, 70);
         transform: scale(0.5);
+        transform: rotate((90deg));
         opacity: 0;
     }
     50%{
-        color: purple;
+        color: rgb(201, 60, 201);
         opacity: 0.5;
     }
     100%{
-        color:green;
+        color:rgb(14, 66, 14);
         transform: scale(1);
+        transform: rotate((360deg));
         opacity: 1;
     }
 }
@@ -35,3 +53,5 @@ img{
         padding: 0px 25px;
     }
 }
+
+
