@@ -3,6 +3,8 @@ import { Userservice} from '../../services/user.service';
 import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
 
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-me',
@@ -12,9 +14,7 @@ import { Router } from '@angular/router';
 export class MeComponent implements OnInit {
 
   user: User;
-  error: boolean;
   
-
   constructor(private userService: Userservice,
               private router : Router) { 
      this.user = new User();
@@ -36,7 +36,17 @@ export class MeComponent implements OnInit {
     if(this.user.password.length > 0){
       this.userService.putUser(this.user)
       .subscribe((response)=>{
-        this.error = false;
+        Swal.fire({
+          title:'Yes!!',
+          text:'Mot de passe modifié !',
+          icon:'success'
+        })
+      },error =>{
+        Swal.fire({
+          title:'Oopss..',
+          text:'Mot de passe incorrect ou mot de passe identique !',
+          icon:'error'
+        })
       })
     }
   }
