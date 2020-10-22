@@ -24,13 +24,15 @@ img{
     
 }
 .name{
-    animation: text 4s 1;
+    animation: text 4s ease-in-out;
     font-size: 50px;
+    font-weight: bold;
+
 }
 @keyframes text {
     0%{
         color: rgb(206, 70, 70);
-        transform: scale(0);
+        transform: scale3d(0.4,0.9,1.6);  
         opacity: 0;
     }
     25%{
@@ -51,7 +53,7 @@ img{
     }
     100%{
         color:rgb(14, 66, 14);
-        transform: scale(1);
+        transform: scale3d(1,1,1);
         opacity: 1;
     }
 }
