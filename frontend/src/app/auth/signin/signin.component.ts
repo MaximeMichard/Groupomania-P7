@@ -37,7 +37,8 @@ export class SigninComponent implements OnInit {
               timer: 2000
             })
             setTimeout(()=>{
-              this.router.navigate(['/auth/me']);
+              window.location.href="http://localhost:4200/auth/me";
+              /* this.router.navigate(['/auth/me']); */
             },3000)
         }
         else{

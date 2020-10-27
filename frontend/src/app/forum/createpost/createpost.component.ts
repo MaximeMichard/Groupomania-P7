@@ -40,6 +40,9 @@ export class CreatepostComponent implements OnInit {
         }
         else{
           this.router.navigate(['/forum']);
+          setTimeout(()=>
+          location.reload()
+          ,2000)
         }
        },3000);        
       },(error) =>{
