@@ -41,6 +41,9 @@ export class MeComponent implements OnInit {
           text:'Mot de passe modifié !',
           icon:'success'
         })
+        setTimeout(function(){
+          location.reload(); 
+        },2000);
       },error =>{
         Swal.fire({
           title:'Oopss..',
@@ -54,11 +57,17 @@ export class MeComponent implements OnInit {
   delete(){
     this.userService.deleteUser(this.user)
     .subscribe((response) =>{
-      console.log(response);
       if (response === 1 || response === "1"){
-        alert('Votre compte a été supprimé !');
         this.userService.deconnectionUser();
         this.router.navigate(['/auth/signin']);
+        Swal.fire({
+          title:'Delete',
+          text:'Votre compte a été supprimé !',
+          icon:'warning'
+        })
+        setTimeout(function(){
+          location.reload(); 
+        },3000);
       }
     })
   }

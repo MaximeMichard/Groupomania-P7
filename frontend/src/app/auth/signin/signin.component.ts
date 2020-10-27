@@ -37,7 +37,7 @@ export class SigninComponent implements OnInit {
               timer: 2000
             })
             setTimeout(()=>{
-              this.router.navigate(['/forum']);
+              this.router.navigate(['/auth/me']);
             },3000)
         }
         else{

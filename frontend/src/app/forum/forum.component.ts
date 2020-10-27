@@ -54,7 +54,7 @@ export class ForumComponent implements OnInit {
       )
       setTimeout(function(){
         location.reload(); 
-      },3000);
+      },2000);
     },(err)=>{
       this.router.navigate(['/not-found']);
       this.delete = true;

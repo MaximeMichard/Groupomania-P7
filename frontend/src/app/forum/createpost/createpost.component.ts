@@ -19,7 +19,7 @@ export class CreatepostComponent implements OnInit {
 
   constructor(private postService: Postservice,
               private router : Router) {
-                this.post = new Post();
+              this.post = new Post();
                }
 
   ngOnInit(): void {
